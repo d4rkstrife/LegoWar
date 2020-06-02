@@ -1,32 +1,36 @@
 class Personnage {
-    constructor(data, joueur) {
+    constructor(data, joueur, skin) {
         this.data = data;
-        this.joueur = joueur
-        this.xPosition = 0;
-        this.yPosition = 0;
+        this.joueur = joueur;
+        this.position;
+        this.image = new Image();
+        this.image.src = "image/" + skin;
     }
     placerPersonnage() {
-        this.ligneAleatoire();
-        this.colonneAleatoire();
-
-        if (this.data[this.xPosition][this.yPosition] == "0") {
-            if (this.joueur == "joueur1") {
-                this.data[this.xPosition][this.yPosition] = 2;
-            } else {
-                this.data[this.xPosition][this.yPosition] = 3;
-            }
+        let aleatoire = Math.floor(Math.random() * 100);
+        let cellAleatoire = document.getElementById(aleatoire);
+        if (cellAleatoire.className == "case_vide") {
+            cellAleatoire.className = this.joueur;
+            cellAleatoire.appendChild(this.image);
+            this.position = cellAleatoire.id;
+            console.log(this.position)
         } else {
             this.placerPersonnage();
         }
     }
-    nombreAleatoire(max) {
-        return Math.floor(Math.random() * max);
+    seDeplacer() {
+        let position = this.position;
+        let image = this.image;
+        let joueur = this.joueur;
+        $(".case_vide").click(function () {
+            console.log(position);
+            $("#" + position).removeClass().addClass("case_vide");
+            $("#" + position).empty();
+            $("#" + this.id).removeClass().addClass(joueur);
+            $("#" + this.id).append(image);
+            position = this.id;
+        })
+        this.position = position;
     }
 
-    ligneAleatoire() {
-        this.xPosition = this.nombreAleatoire(this.data.length);
-    }
-    colonneAleatoire() {
-        this.yPosition = this.nombreAleatoire(this.data[this.xPosition].length);
-    }
 }
