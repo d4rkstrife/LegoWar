@@ -1,23 +1,24 @@
 class App {
-    constructor(joueur1, joueur2, grille, arme1, arme2) {
-        this.grille = grille;
-        this.joueur1 = joueur1;
-        this.joueur2 = joueur2;
-        this.arme1 = arme1;
-        this.arme2 = arme2;
+    constructor() {
+
     }
     run() {
-        this.grille.genererGrille();
-        this.arme1.placerArme();
-        this.arme2.placerArme();
-        this.joueur1.placerPersonnage();
-        this.joueur2.placerPersonnage();
-        this.comparerPosition(this.joueur1, this.joueur2);
+        let arme = new Arme(armes);
+
+
+        let joueur1 = new Personnage("joueur1", "Joueur1.png");
+        let joueur2 = new Personnage("joueur2", "Joueur2.png");
+        let grille = new Grille("grille_container", arme, joueur1);
+        grille.genererGrille(10, 10);
+        grille.comparerPosition(joueur1, joueur2);
+        console.log(grille.datas);
+        grille.placerJoueur(joueur1);
+        grille.placerJoueur(joueur2);
     }
     comparerPosition(joueur1, joueur2) {
         let diffPosition = joueur1.position - joueur2.position;
         while (diffPosition == 1 || diffPosition == -1 || diffPosition == 10 || diffPosition == -10) {
-            joueur2.placerPersonnage();
+            joueur2.placerJoueur("a");
         }
     }
 }

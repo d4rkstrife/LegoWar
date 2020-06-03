@@ -1,6 +1,5 @@
 class Personnage {
-    constructor(data, joueur, skin) {
-        this.data = data;
+    constructor(joueur, skin) {
         this.joueur = joueur;
         this.position;
         this.image = new Image();
@@ -12,25 +11,18 @@ class Personnage {
         if (cellAleatoire.className == "case_vide") {
             cellAleatoire.className = this.joueur;
             cellAleatoire.appendChild(this.image);
+
             this.position = cellAleatoire.id;
             console.log(this.position)
         } else {
             this.placerPersonnage();
         }
     }
-    seDeplacer() {
-        let position = this.position;
-        let image = this.image;
-        let joueur = this.joueur;
-        $(".case_vide").click(function () {
-            console.log(position);
-            $("#" + position).removeClass().addClass("case_vide");
-            $("#" + position).empty();
-            $("#" + this.id).removeClass().addClass(joueur);
-            $("#" + this.id).append(image);
-            position = this.id;
-        })
-        this.position = position;
+    initialiserPerso() {
+        let perso = new Array();
+        perso.push(this.joueur, this.image);
+        return perso;
     }
+
 
 }
