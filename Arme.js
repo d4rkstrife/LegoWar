@@ -1,12 +1,9 @@
 class Arme {
     constructor(data) {
         this.data = data;
+        this.nom = data[0];
+        this.damage = data[1];
+        this.skin = data[2];
     }
-    armeAleatoire(x) {
-        let armesAleatoires = new Array();
-        for (let i = 0; i < x; i++) {
-            armesAleatoires.push(this.data[Math.floor(Math.random() * this.data.length)]);
-        }
-        return armesAleatoires;
-    }
+
 }
