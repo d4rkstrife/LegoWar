@@ -19,6 +19,7 @@ class Grille {
                 cell.coords = { i, j };
                 cell.statut = "case_vide";
                 cell.isEmpty = true;
+                cell.skin = "none"
             }
         }
         this.placerObstacle(nbrObstacles);
@@ -98,7 +99,9 @@ class Grille {
         while ((joueur1.position.x == joueur2.position.x && (joueur1.position.y - joueur2.position.y == -1 || joueur1.position.y - joueur2.position.y == 1)) || (joueur1.position.y == joueur2.position.y && (joueur1.position.x - joueur2.position.x == -1 || joueur1.position.x - joueur2.position.x == 1))) {
 
             console.log("trop pret");
-            this.datas[joueur2.position.x][joueur2.position.y] = { "coords": { i: joueur2.position.x, j: joueur2.position.y }, "statut": "case_vide", isEmpty: true };
+            this.datas[joueur2.position.x][joueur2.position.y].statut = "case_vide";
+            this.datas[joueur2.position.x][joueur2.position.y].isEmpty = true;
+            this.datas[joueur2.position.x][joueur2.position.y].skin = "none";
             this.placerJoueur(this.joueur2);
         }
 
