@@ -2,20 +2,24 @@ class App {
     constructor(armes, joueurs) {
         this.armes = armes;
         this.joueurs = joueurs;
-        this.joueur = [];
-        this.arme = [];
+        this.joueursCollection = [];
+        this.armesCollection = [];
 
     }
     run() {
         this.joueurs.forEach(element => {
-            this.joueur.push(new Player(element));
+            this.joueursCollection.push(new Player(element));
         });
         this.armes.forEach(element => {
-            this.arme.push(new Arme(element));
+            this.armesCollection.push(new Arme(element));
         })
-        let grille = new Grille(this.joueur, this.arme);
+        let grille = new Grille(this.joueursCollection, this.armesCollection);
         grille.genererGrille(10, 10, 10);
         grille.render("grille_container");
+        let game = new Game(this.joueursCollection, grille)
+        console.log(grille.grille);
+        game.init();
+        console.log(this.joueursCollection[0].position)
 
     }
 

@@ -8,4 +8,15 @@ class Player {
         this.image = new Image();
         this.image.src = "image/" + this.skin;
     }
+    seDeplacer(grille) {
+        let td = document.getElementsByTagName('td');
+        for (let i = 0; i < td.length; i++) {
+            td[i].addEventListener('click', () => {
+                console.log(grille[td[i].id])
+            })
+        }
+
+    }
 }
+
+
