@@ -50,12 +50,10 @@ table td {
     padding: 0;
     text-align : center;
 }
-.joueur1 img {
+.joueur img {
     height : 92%;
 }
-.joueur2 img {
-    height : 95%;
-}
+
 .obstacle {
     background-color: grey;
 }
@@ -84,8 +82,8 @@ table td {
         flex-wrap: wrap;
     }
     table {
-        width: 580px;
-        height: 580px;
+        width: auto;
+        height: auto;
         align-self: center;
         order: 1;
     }
@@ -108,21 +106,8 @@ table td {
     .player p {
         margin: 0;
     }
-    .joueur1 img {
-        width: 95%;
-        height : 95%;
-        margin: 0;
-        padding: 0;
-    }
-    .joueur2 img {
-        width: 95%;
-        height : 95%;
-        margin: 0;
-        padding: 0;
-    }
-    .arme img{
-        height: 95%;
-        width : 95%;
+    .joueur img {
+        height : 90%;
         margin: 0;
         padding: 0;
     }
@@ -164,21 +149,9 @@ table td {
         height: 10vw;
         padding: 0;
     }
-    .joueur1 img {
+    .joueur img {
         width: 95%;
         height : 95%;
-        margin: 0;
-        padding: 0;
-    }
-    .joueur2 img {
-        width: 95%;
-        height : 95%;
-        margin: 0;
-        padding: 0;
-    }
-    .arme img{
-        height: 95%;
-        width : 95%;
         margin: 0;
         padding: 0;
     }
