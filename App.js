@@ -16,10 +16,11 @@ class App {
         let grille = new Grille(this.joueursCollection, this.armesCollection);
         grille.genererGrille(10, 10, 10);
         grille.render("grille_container");
-        let game = new Game(this.joueursCollection, grille)
-        console.log(grille.grille);
+        console.log(this.joueursCollection[0].coordsToPosition(this.joueursCollection[0].coords))
+        let game = new Game(this.joueursCollection, grille);
+        //     console.log(grille.grille);
         game.init();
-        console.log(this.joueursCollection[0].position)
+        console.log(grille.grille);
 
     }
 

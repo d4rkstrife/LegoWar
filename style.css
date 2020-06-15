@@ -10,6 +10,9 @@ header {
     display: flex;
     justify-content: center;
 }
+.red {
+    background-color: red;
+}
 h1{
     font-family: "legothick", sans-serif;
     width: 270px;

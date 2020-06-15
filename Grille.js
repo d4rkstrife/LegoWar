@@ -8,11 +8,15 @@ class Grille {
     genererGrille(nbrLignes, nbrColonnes, nbrObstacles) {
         this.nbrColonnes = nbrColonnes;
         for (let i = 0; i < nbrLignes; i++) {
+            let ligne = new Array();
+            this.grille.push(ligne)
             for (let j = 0; j < nbrColonnes; j++) {
                 const cell = {};
-                this.grille.push(cell);
+                ligne.push(cell);
                 cell.statut = "case_vide";
+                cell.coords = [i, j];
                 cell.id = i * nbrColonnes + j;
+                cell.content = null;
             }
         }
         for (let i = 0; i < nbrObstacles; i++) {
@@ -24,48 +28,52 @@ class Grille {
         this.joueurs.forEach(element => {
             this.placerObjet(element)
         })
-        this.comparerPositionJoueur(this.joueurs[0], this.joueurs[1]);
     }
 
     render(container) {
         let table = document.getElementById(container);
         this.grille.forEach(element => {
-            if (element.id % this.nbrColonnes == 0) {
-                let colonne = document.createElement('tr');
-                table.appendChild(colonne);
-            }
-            const cell = document.createElement('td');
-            cell.id = element.id;
-            cell.className = element.statut;
-            table.lastChild.appendChild(cell);
-            if (element.statut == "case_occupée") {
-                cell.appendChild(element.skin);
-                cell.className = "joueur";
-            };
-        });
+
+            let ligne = document.createElement('tr');
+            table.appendChild(ligne);
+            element.forEach(element => {
+                const cell = document.createElement('td');
+                ligne.appendChild(cell)
+                cell.id = element.id;
+                cell.className = element.statut;
+                if (element.statut == "case_occupée") {
+                    cell.appendChild(element.content.image);
+                    cell.className = "joueur";
+                }
+            })
+        })
     }
+
+
     placerObstacle() {
-        let caseAleatoire = this.elementAleatoire();
-        if (this.grille[caseAleatoire].statut == "case_vide") {
-            this.grille[caseAleatoire].statut = "obstacle";
+        let ligneAleatoire = this.elementAleatoire(this.grille);
+        let colonneAleatoire = this.elementAleatoire(this.grille[ligneAleatoire]);
+        if (this.grille[ligneAleatoire][colonneAleatoire].statut == "case_vide") {
+            this.grille[ligneAleatoire][colonneAleatoire].statut = "obstacle";
         } else {
             this.placerObstacle();
         }
 
     }
     placerObjet(objet) {
-        let caseAleatoire = this.elementAleatoire();
-        if (this.grille[caseAleatoire].statut == "case_vide") {
-            this.grille[caseAleatoire].statut = "case_occupée";
-            this.grille[caseAleatoire].content = objet;
-            this.grille[caseAleatoire].skin = objet.image;
-            objet.position = caseAleatoire;
+        let ligneAleatoire = this.elementAleatoire(this.grille);
+        let colonneAleatoire = this.elementAleatoire(this.grille[ligneAleatoire]);
+        if (this.grille[ligneAleatoire][colonneAleatoire].statut == "case_vide") {
+            this.grille[ligneAleatoire][colonneAleatoire].statut = "case_occupée";
+            this.grille[ligneAleatoire][colonneAleatoire].content = objet;
+            objet.position = [ligneAleatoire][colonneAleatoire];
+            objet.coords = this.grille[ligneAleatoire][colonneAleatoire].coords;
         } else {
             this.placerObjet(objet);
         };
     }
-    elementAleatoire() {
-        return Math.floor(Math.random() * this.grille.length);
+    elementAleatoire(element) {
+        return Math.floor(Math.random() * element.length);
     }
     comparerPositionJoueur(joueur1, joueur2) {
         console.log(joueur1.position, joueur2.position)

@@ -3,16 +3,26 @@ class Game {
         this.joueurs = joueurs;
         this.grille = grille;
         this.round = 0;
-        this.player;
+        this.endGame = false;
+        this.activePlayer;
     }
     init() {
-        if (this.round % 2 == 0) {
-            this.player = this.joueurs[0];
-        } else {
-            this.player = this.joueurs[1];
-        };
-        console.log(this.player);
-        this.player.seDeplacer(this.grille.grille);
+        if (!this.endGame) {
+
+            let i = Math.floor(this.round % 2);
+            this.activePlayer = this.joueurs[i];
+            console.log(i, this.round)
+            this.activePlayer.state = "active";
+            this.activePlayer.jouer(this.grille.grille);
+            setInterval(() => { //boucle qui sert à savoir quand le joueur a joué, puis a passer au joueur suivant.
+                if (this.activePlayer.state == "A joué") {
+                    this.round++;
+                    this.init();
+                }
+            }, 100);
+
+        }
 
     }
 }
+
