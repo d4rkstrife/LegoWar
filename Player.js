@@ -44,8 +44,8 @@ class Player {
                             alert("let s fight!");
                             td.forEach(element => {
                                 element.classList.remove("red");
-                            })
-
+                            });
+                            this.state = "Tour fini";
 
                         } else {
                             console.log("erreur")
