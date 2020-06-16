@@ -11,11 +11,11 @@ class Game {
 
             let i = Math.floor(this.round % 2);
             this.activePlayer = this.joueurs[i];
-            console.log(i, this.round)
+            console.log(this.activePlayer.joueur)
             this.activePlayer.state = "active";
             this.activePlayer.jouer(this.grille.grille);
             setInterval(() => { //boucle qui sert à savoir quand le joueur a joué, puis a passer au joueur suivant.
-                if (this.activePlayer.state == "A joué") {
+                if (this.activePlayer.state == "Tour fini") {
                     this.round++;
                     this.init();
                 }

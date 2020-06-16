@@ -4,6 +4,7 @@ class Player {
         this.coords;
         this.joueur = data[0];
         this.pv = data[1];
+        this.armeEquipee;
         this.damage = 10;
         this.skin = data[2];
         this.image = new Image();
@@ -21,6 +22,7 @@ class Player {
                     while (this.state == "active") {
                         if (grille[element[0]][element[1]].statut == "case_vide") {
                             grille[element[0]][element[1]].statut = "case_occupée";
+                            grille[element[0]][element[1]].type = "joueur";
                             grille[element[0]][element[1]].content = grille[this.coords[0]][this.coords[1]].content;
                             grille[this.coords[0]][this.coords[1]].content = null;
                             grille[this.coords[0]][this.coords[1]].statut = "case_vide";
@@ -30,11 +32,24 @@ class Player {
                             td.forEach(element => {
                                 element.classList.remove("red");
                             })
-                            this.state = "A joué";
+                            this.state = "Tour fini";
+
+                        } else if (grille[element[0]][element[1]].type == "arme") {
+                            this.equiperArme(grille[element[0]][element[1]].content)
+                            td.forEach(element => {
+                                element.classList.remove("red");
+                            })
+                            this.state = "Tour fini";
+                        } else if (grille[element[0]][element[1]].type == "joueur") {
+                            alert("let s fight!");
+                            td.forEach(element => {
+                                element.classList.remove("red");
+                            })
+
 
                         } else {
-                            console.log("obstacle");
-                            this.state = "A joué";
+                            console.log("erreur")
+                            this.state = "Tour fini";
                         }
                     }
 
@@ -43,7 +58,17 @@ class Player {
             }
         })
     }
-
+    equiperArme(arme) {
+        console.log("equipe arme");
+        this.armeEquipee = arme;
+        this.damage = this.armeEquipee.damage;
+        let damageElt = document.getElementById("degats_" + this.joueur);
+        damageElt.textContent = this.damage;
+        let armeElt = document.getElementById("arme_" + this.joueur);
+        armeElt.src = "image/" + this.armeEquipee.skin;
+        console.log(this.armeEquipee);
+        this.state = "Tour fini";
+    }
 
     jouer(grille) {
         this.seDeplacer(grille)

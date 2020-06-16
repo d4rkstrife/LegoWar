@@ -23,10 +23,10 @@ class Grille {
             this.placerObstacle();
         }
         this.armes.forEach(element => {
-            this.placerObjet(element);
+            this.placerObjet(element, "arme");
         })
         this.joueurs.forEach(element => {
-            this.placerObjet(element)
+            this.placerObjet(element, "joueur")
         })
     }
 
@@ -60,13 +60,14 @@ class Grille {
         }
 
     }
-    placerObjet(objet) {
+    placerObjet(objet, type) {
         let ligneAleatoire = this.elementAleatoire(this.grille);
         let colonneAleatoire = this.elementAleatoire(this.grille[ligneAleatoire]);
         if (this.grille[ligneAleatoire][colonneAleatoire].statut == "case_vide") {
             this.grille[ligneAleatoire][colonneAleatoire].statut = "case_occupée";
+            this.grille[ligneAleatoire][colonneAleatoire].type = type;
             this.grille[ligneAleatoire][colonneAleatoire].content = objet;
-            objet.position = [ligneAleatoire][colonneAleatoire];
+            //    objet.position = [ligneAleatoire][colonneAleatoire];
             objet.coords = this.grille[ligneAleatoire][colonneAleatoire].coords;
         } else {
             this.placerObjet(objet);
