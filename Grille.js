@@ -19,8 +19,10 @@ class Grille {
             this.placerObstacle();
         }
         this.armes.forEach(element => {
-            //if arme0...
-            this.placerObjet(element);
+            if (element.nom !== "couteau") {
+                this.placerObjet(element);
+            }
+
         })
         this.joueurs.forEach(element => {
             this.placerObjet(element)
