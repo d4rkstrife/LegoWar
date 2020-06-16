@@ -8,7 +8,7 @@ class App {
     }
     run() {
         this.joueurs.forEach(element => {
-            this.joueur.push(new Player(element));
+            this.joueur.push(new Player(element));//+ arme de départ
         });
         this.armes.forEach(element => {
             this.arme.push(new Arme(element));

@@ -19,6 +19,7 @@ class Grille {
             this.placerObstacle();
         }
         this.armes.forEach(element => {
+            //if arme0...
             this.placerObjet(element);
         })
         this.joueurs.forEach(element => {
@@ -39,10 +40,11 @@ class Grille {
             cell.className = element.statut;
             table.lastChild.appendChild(cell);
             if (element.statut == "case_occupée") {
-                cell.appendChild(element.skin);
+                cell.appendChild(element.content.image);
                 cell.className = "joueur";
             };
         });
+        console.log(this.grille)
     }
     placerObstacle() {
         let caseAleatoire = this.elementAleatoire();
@@ -58,7 +60,6 @@ class Grille {
         if (this.grille[caseAleatoire].statut == "case_vide") {
             this.grille[caseAleatoire].statut = "case_occupée";
             this.grille[caseAleatoire].content = objet;
-            this.grille[caseAleatoire].skin = objet.image;
             objet.position = caseAleatoire;
         } else {
             this.placerObjet(objet);
@@ -68,7 +69,6 @@ class Grille {
         return Math.floor(Math.random() * this.grille.length);
     }
     comparerPositionJoueur(joueur1, joueur2) {
-        console.log(joueur1.position, joueur2.position)
         while (joueur1.position - joueur2.position == 1 || joueur1.position - joueur2.position == -1 || joueur1.position - joueur2.position == 10 || joueur1.position - joueur2.position == -10) {
             this.grille[joueur2.position] = { statut: "case_vide", id: joueur2.position };
             this.placerObjet(joueur2);

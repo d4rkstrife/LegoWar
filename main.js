@@ -1,4 +1,5 @@
 const armes = [
+    // [arme de départ],
     ["epee", 15, "épée.png"],
     ["hache", 20, "hache.png"],
     ["faux", 18, "faux.png"],
