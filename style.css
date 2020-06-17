@@ -39,6 +39,10 @@ main{
     background: white;
     border: 5px solid yellow;
 }
+
+.background_red {
+    background-color: red;
+}
 table {
     margin: 0;
     border-spacing: 0;

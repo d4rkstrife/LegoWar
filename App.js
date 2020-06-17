@@ -7,18 +7,18 @@ class App {
 
     }
     run() {
-        this.joueurs.forEach(element => {
-            this.joueursCollection.push(new Player(element));
-        });
+
         this.armes.forEach(element => {
             this.armesCollection.push(new Arme(element));
-        })
+        });
+        this.joueurs.forEach(element => {
+            this.joueursCollection.push(new Player(element, this.armesCollection[0]));
+        });
         let grille = new Grille(this.joueursCollection, this.armesCollection);
         grille.genererGrille(10, 10, 10);
         grille.render("grille_container");
-        console.log(this.joueursCollection[0].coordsToPosition(this.joueursCollection[0].coords))
+        console.log(grille.coordsToPosition(this.joueursCollection[0].coords))
         let game = new Game(this.joueursCollection, grille);
-        //     console.log(grille.grille);
         game.init();
         console.log(grille.grille);
 
