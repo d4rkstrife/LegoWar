@@ -33,7 +33,7 @@ class Grille {
         this.joueurs.forEach(element => {
             this.placerObjet(element, "joueur")
         });
-        //      this.comparerPositionJoueur(this.joueurs[0], this.joueurs[1]);
+              this.comparerPositionJoueur(this.joueurs[0], this.joueurs[1]);
     }
 
     // methode qui crée la table grace a la grille
@@ -106,7 +106,9 @@ class Grille {
     comparerPositionJoueur(joueur1, joueur2) {
         console.log(joueur1.position, joueur2.position)
         while (joueur1.position - joueur2.position == 1 || joueur1.position - joueur2.position == -1 || joueur1.position - joueur2.position == 10 || joueur1.position - joueur2.position == -10) {
-            this.grille[joueur2.position] = { statut: "case_vide", id: joueur2.position };
+            this.grille[joueur2.coords[0]][joueur2.coords[1]].statut = "case_vide";
+            this.grille[joueur2.coords[0]][joueur2.coords[1]].content = null;
+            this.grille[joueur2.coords[0]][joueur2.coords[1]].type = null;
             this.placerObjet(joueur2, "joueur");
         }
     }
