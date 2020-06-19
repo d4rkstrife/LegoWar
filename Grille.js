@@ -129,6 +129,7 @@ class Grille {
             this.grille[coordOrigine[0]][coordOrigine[1]].content = null;
             this.grille[coordOrigine[0]][coordOrigine[1]].type = null;
             this.grille[coordOrigine[0]][coordOrigine[1]].statut = "case_vide";
+            console.log("cas 1");
             this.renderCase(coordOrigine);
             this.renderCase(coordDestination);
 
@@ -138,6 +139,7 @@ class Grille {
             this.grille[coordOrigine[0]][coordOrigine[1]].content = null;
             this.grille[coordOrigine[0]][coordOrigine[1]].type = null;
             this.grille[coordOrigine[0]][coordOrigine[1]].statut = "case_vide";
+            console.log("cas 2");
             this.renderCase(coordOrigine);
             this.renderCase(coordDestination);
 
@@ -147,6 +149,7 @@ class Grille {
             this.grille[coordDestination[0]][coordDestination[1]].content = this.grille[coordOrigine[0]][coordOrigine[1]].content2;
             this.grille[coordOrigine[0]][coordOrigine[1]].content2 = null;
             this.grille[coordOrigine[0]][coordOrigine[1]].type = "arme";
+            console.log("cas 3");
             this.renderCase(coordOrigine);
             this.renderCase(coordDestination);
 
@@ -155,6 +158,7 @@ class Grille {
             this.grille[coordDestination[0]][coordDestination[1]].content2 = this.grille[coordOrigine[0]][coordOrigine[1]].content2;
             this.grille[coordOrigine[0]][coordOrigine[1]].content2 = null;
             this.grille[coordOrigine[0]][coordOrigine[1]].type = "arme";
+            console.log("cas 4");
             this.renderCase(coordOrigine);
             this.renderCase(coordDestination);
         }
