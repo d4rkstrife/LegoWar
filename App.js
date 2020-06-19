@@ -17,7 +17,6 @@ class App {
         let grille = new Grille(this.joueursCollection, this.armesCollection);
         grille.genererGrille(10, 10, 10);
         grille.render("grille_container");
-        console.log(grille.coordsToPosition(this.joueursCollection[0].coords))
         let game = new Game(this.joueursCollection, grille);
         game.init();
         console.log(grille.grille);

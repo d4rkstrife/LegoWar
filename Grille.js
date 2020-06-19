@@ -19,22 +19,24 @@ class Grille {
                 cell.content = null;
             }
         }
+        //placement des obstacles
         for (let i = 0; i < nbrObstacles; i++) {
             this.placerObstacle();
         }
+        //placement des armes
         this.armes.forEach(element => {
             if (element.nom !== "couteau") {
                 this.placerObjet(element, "arme");
             }
-
         });
+        //placement des joueurs
         this.joueurs.forEach(element => {
             this.placerObjet(element, "joueur")
         });
-        this.comparerPositionJoueur(this.joueurs[0], this.joueurs[1]);
+        //      this.comparerPositionJoueur(this.joueurs[0], this.joueurs[1]);
     }
 
-
+    // methode qui crée la table grace a la grille
     render(container) {
         let table = document.getElementById(container);
         this.grille.forEach(element => {
@@ -52,6 +54,25 @@ class Grille {
                 }
             })
         })
+    }
+    //render pour une seule case
+    renderCase(coords) {
+        let id = this.coordsToPosition(coords)
+        let td = document.getElementById(id);
+        if (this.grille[coords[0]][coords[1]].statut === "case_vide") {
+            td.innerHTML = '';
+            td.className = "case_vide"
+        } else if (this.grille[coords[0]][coords[1]].statut === "case_occupée") {
+            if (this.grille[coords[0]][coords[1]].type === "joueur" || this.grille[coords[0]][coords[1]].type === "arme") {
+                td.appendChild(this.grille[coords[0]][coords[1]].content.image);
+                td.className = "joueur";
+            } else if (this.grille[coords[0]][coords[1]].type == "joueur arme") {
+                td.innerHTML = '';
+                td.appendChild(this.grille[coords[0]][coords[1]].content2.image);
+                td.className = "joueur";
+            }
+        }
+
     }
 
 
@@ -72,21 +93,21 @@ class Grille {
             this.grille[ligneAleatoire][colonneAleatoire].statut = "case_occupée";
             this.grille[ligneAleatoire][colonneAleatoire].type = type;
             this.grille[ligneAleatoire][colonneAleatoire].content = objet;
-            //    objet.position = [ligneAleatoire][colonneAleatoire];
             objet.coords = this.grille[ligneAleatoire][colonneAleatoire].coords;
             objet.position = this.coordsToPosition(objet.coords)
         } else {
-            this.placerObjet(objet);
+            this.placerObjet(objet, type);
         };
     }
     elementAleatoire(element) {
         return Math.floor(Math.random() * element.length);
     }
+
     comparerPositionJoueur(joueur1, joueur2) {
         console.log(joueur1.position, joueur2.position)
         while (joueur1.position - joueur2.position == 1 || joueur1.position - joueur2.position == -1 || joueur1.position - joueur2.position == 10 || joueur1.position - joueur2.position == -10) {
             this.grille[joueur2.position] = { statut: "case_vide", id: joueur2.position };
-            this.placerObjet(joueur2);
+            this.placerObjet(joueur2, "joueur");
         }
     }
     coordsToPosition(coords) { //transforme les coordonnées en int pour coincider avec les id.
@@ -98,6 +119,45 @@ class Grille {
         let a = (position - b) / 10;
         let coords = [a, b];
         return coords
+    }
+
+    deplacerJoueur(coordOrigine, coordDestination) {
+        if (this.grille[coordDestination[0]][coordDestination[1]].statut == "case_vide" && this.grille[coordOrigine[0]][coordOrigine[1]].type == "joueur") {
+            this.grille[coordDestination[0]][coordDestination[1]].statut = "case_occupée";
+            this.grille[coordDestination[0]][coordDestination[1]].type = "joueur";
+            this.grille[coordDestination[0]][coordDestination[1]].content = this.grille[coordOrigine[0]][coordOrigine[1]].content;
+            this.grille[coordOrigine[0]][coordOrigine[1]].content = null;
+            this.grille[coordOrigine[0]][coordOrigine[1]].type = null;
+            this.grille[coordOrigine[0]][coordOrigine[1]].statut = "case_vide";
+            this.renderCase(coordOrigine);
+            this.renderCase(coordDestination);
+
+        } else if ((this.grille[coordDestination[0]][coordDestination[1]].statut == "case_occupée" && this.grille[coordDestination[0]][coordDestination[1]].type == "arme") && this.grille[coordOrigine[0]][coordOrigine[1]].type == "joueur") {
+            this.grille[coordDestination[0]][coordDestination[1]].type = "joueur arme";
+            this.grille[coordDestination[0]][coordDestination[1]].content2 = this.grille[coordOrigine[0]][coordOrigine[1]].content;
+            this.grille[coordOrigine[0]][coordOrigine[1]].content = null;
+            this.grille[coordOrigine[0]][coordOrigine[1]].type = null;
+            this.grille[coordOrigine[0]][coordOrigine[1]].statut = "case_vide";
+            this.renderCase(coordOrigine);
+            this.renderCase(coordDestination);
+
+        } else if (this.grille[coordOrigine[0]][coordOrigine[1]].type == "joueur arme" && this.grille[coordDestination[0]][coordDestination[1]].statut == "case_vide") {
+            this.grille[coordDestination[0]][coordDestination[1]].statut = "case_occupée";
+            this.grille[coordDestination[0]][coordDestination[1]].type = "joueur";
+            this.grille[coordDestination[0]][coordDestination[1]].content = this.grille[coordOrigine[0]][coordOrigine[1]].content2;
+            this.grille[coordOrigine[0]][coordOrigine[1]].content2 = null;
+            this.grille[coordOrigine[0]][coordOrigine[1]].type = "arme";
+            this.renderCase(coordOrigine);
+            this.renderCase(coordDestination);
+
+        } else if (this.grille[coordOrigine[0]][coordOrigine[1]].type == "joueur arme" && this.grille[coordDestination[0]][coordDestination[1]].type == "arme") {
+            this.grille[coordDestination[0]][coordDestination[1]].type = "joueur arme";
+            this.grille[coordDestination[0]][coordDestination[1]].content2 = this.grille[coordOrigine[0]][coordOrigine[1]].content2;
+            this.grille[coordOrigine[0]][coordOrigine[1]].content2 = null;
+            this.grille[coordOrigine[0]][coordOrigine[1]].type = "arme";
+            this.renderCase(coordOrigine);
+            this.renderCase(coordDestination);
+        }
     }
     casesAccessibles(coords) {
         let listeCases = [];
@@ -177,8 +237,13 @@ class Grille {
     }
     marquerPossibilités(coordsArray) {
         coordsArray.forEach(element => {
-            let caseRouge = document.getElementById(this.coordsToPosition(element));
-            caseRouge.classList.add("red");
+            let caseDispo = document.getElementById(this.coordsToPosition(element));
+            if (caseDispo.className == "case_vide") {
+                caseDispo.classList.add("green");
+            } else {
+                caseDispo.classList.add("red");
+            }
+
         })
     }
 

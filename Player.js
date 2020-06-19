@@ -2,13 +2,13 @@ class Player {
     constructor(data, arme) {
 
         this.coords = [0, 0];
-        this.position = 0;
+        this.position;
         this.joueur = data[0];
         this.pv = data[1];
         this.armeEquipee = arme
         this.damage = this.armeEquipee.damage;
         this.image = new Image();
-        this.image.src = "image/" + data[2];
+        this.image.src = `image/${data[2]}`;
         this.state = "En attente"
     }
     seDeplacer(grille) {
@@ -26,27 +26,35 @@ class Player {
                     if (cases.indexOf(parseInt(element.id)) !== -1) {
                         let elementCoords = grille.positionToCoord(element.id);
                         if (grille.grille[elementCoords[0]][elementCoords[1]].statut == "case_vide") {
-                            grille.grille[elementCoords[0]][elementCoords[1]].statut = "case_occupée";
-                            grille.grille[elementCoords[0]][elementCoords[1]].type = "joueur";
-                            grille.grille[elementCoords[0]][elementCoords[1]].content = grille.grille[this.coords[0]][this.coords[1]].content;
-                            grille.grille[this.coords[0]][this.coords[1]].content = null;
-                            grille.grille[this.coords[0]][this.coords[1]].statut = "case_vide";
+                            grille.deplacerJoueur(this.coords, elementCoords);
                             this.coords = elementCoords;
-                            td[element.id].appendChild(grille.grille[elementCoords[0]][elementCoords[1]].content.image);
-                            td[element.id].className = "joueur";
+                            this.position = grille.coordsToPosition(this.coords);
                             td.forEach(element => {
                                 element.classList.remove("red");
+                                element.classList.remove("green");
                             });
                             cases = [];
                             this.state = "Tour fini";
+
                         } else if (grille.grille[elementCoords[0]][elementCoords[1]].type == "arme") {
-                            this.equiperArme(grille.grille[elementCoords[0]][elementCoords[1]].content)
+                            this.equiperArme(grille.grille[elementCoords[0]][elementCoords[1]]);
+                            grille.deplacerJoueur(this.coords, elementCoords);
+                            this.coords = elementCoords;
+                            this.position = grille.coordsToPosition(this.coords);
                             td.forEach(element => {
                                 element.classList.remove("red");
+                                element.classList.remove("green");
                             })
+                            cases = [];
                             this.state = "Tour fini";
+
                         } else {
-                            console.log(grille.grille[elementCoords[0]][elementCoords[1]].content);
+                            alert("Pas encore prêt au combat");
+                            td.forEach(element => {
+                                element.classList.remove("red");
+                                element.classList.remove("green");
+                            })
+                            cases = [];
                             this.state = "Tour fini";
                         }
                     }
@@ -55,20 +63,18 @@ class Player {
             })
         })
     }
-    equiperArme(arme) {
-        console.log("equipe arme");
+    equiperArme(emplacement) {
+        let arme = emplacement.content
+        let armeTemp = this.armeEquipee;
         this.armeEquipee = arme;
+        emplacement.content = armeTemp;
         this.damage = this.armeEquipee.damage;
-        let damageElt = document.getElementById("degats_" + this.joueur);
+        let damageElt = document.getElementById(`degats_${this.joueur}`);
         damageElt.textContent = this.damage;
-        let armeElt = document.getElementById("arme_" + this.joueur);
+        let armeElt = document.getElementById(`arme_${this.joueur}`);
         armeElt.src = this.armeEquipee.image.src;
-        console.log(this.armeEquipee);
     }
-
     jouer(grille) {
         this.seDeplacer(grille)
     }
-
-
 }

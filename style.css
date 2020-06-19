@@ -13,6 +13,9 @@ header {
 .red {
     background-color: red;
 }
+.green {
+    background-color: green;
+}
 h1{
     font-family: "legothick", sans-serif;
     width: 270px;
@@ -57,7 +60,7 @@ table td {
     padding: 0;
     text-align : center;
 }
-.joueur img {
+td img {
     height : 92%;
 }
 
