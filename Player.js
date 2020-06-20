@@ -5,8 +5,7 @@ class Player {
         this.pv = data[1];
         this.armeEquipee = arme
         this.damage = this.armeEquipee.damage;
-        this.skin = data[2];
         this.image = new Image();
-        this.image.src = "image/" + this.skin;
+        this.image.src = "image/" + data[2];
     }
 }
