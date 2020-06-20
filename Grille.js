@@ -33,7 +33,7 @@ class Grille {
         this.joueurs.forEach(element => {
             this.placerObjet(element, "joueur")
         });
-              this.comparerPositionJoueur(this.joueurs[0], this.joueurs[1]);
+        this.comparerPositionJoueur(this.joueurs[0], this.joueurs[1]);
     }
 
     // methode qui crée la table grace a la grille
@@ -64,7 +64,10 @@ class Grille {
             td.className = "case_vide"
         } else if (this.grille[coords[0]][coords[1]].statut === "case_occupée") {
             if (this.grille[coords[0]][coords[1]].type === "joueur" || this.grille[coords[0]][coords[1]].type === "arme") {
-                td.appendChild(this.grille[coords[0]][coords[1]].content.image);
+                td.innerHTML = '';
+                let image = new Image();
+                image.src = `image/${this.grille[coords[0]][coords[1]].content.skin}`
+                td.appendChild(image);
                 td.className = "joueur";
             } else if (this.grille[coords[0]][coords[1]].type == "joueur arme") {
                 td.innerHTML = '';
@@ -141,7 +144,6 @@ class Grille {
             this.grille[coordOrigine[0]][coordOrigine[1]].content = null;
             this.grille[coordOrigine[0]][coordOrigine[1]].type = null;
             this.grille[coordOrigine[0]][coordOrigine[1]].statut = "case_vide";
-            console.log("cas 2");
             this.renderCase(coordOrigine);
             this.renderCase(coordDestination);
 

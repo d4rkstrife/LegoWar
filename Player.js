@@ -5,6 +5,7 @@ class Player {
         this.position;
         this.joueur = data[0];
         this.pv = data[1];
+        this.skin = data[2];
         this.armeEquipee = arme
         this.damage = this.armeEquipee.damage;
         this.image = new Image();
