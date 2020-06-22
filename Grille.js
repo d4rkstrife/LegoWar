@@ -33,7 +33,13 @@ class Grille {
         this.joueurs.forEach(element => {
             this.placerObjet(element, "joueur")
         });
-        this.comparerPositionJoueur(this.joueurs[0], this.joueurs[1]);
+        while (this.comparerPosition(this.joueurs[0], this.joueurs[1]) == true) {
+            this.grille[this.joueurs[1].coords[0]][this.joueurs[1].coords[1]].statut = "case_vide";
+            this.grille[this.joueurs[1].coords[0]][this.joueurs[1].coords[1]].content = null;
+            this.grille[this.joueurs[1].coords[0]][this.joueurs[1].coords[1]].type = null;
+            this.placerObjet(this.joueurs[1], "joueur");
+        }
+
     }
 
     // methode qui crée la table grace a la grille
@@ -106,13 +112,11 @@ class Grille {
         return Math.floor(Math.random() * element.length);
     }
 
-    comparerPositionJoueur(joueur1, joueur2) {
-        console.log(joueur1.position, joueur2.position)
-        while (joueur1.position - joueur2.position == 1 || joueur1.position - joueur2.position == -1 || joueur1.position - joueur2.position == 10 || joueur1.position - joueur2.position == -10) {
-            this.grille[joueur2.coords[0]][joueur2.coords[1]].statut = "case_vide";
-            this.grille[joueur2.coords[0]][joueur2.coords[1]].content = null;
-            this.grille[joueur2.coords[0]][joueur2.coords[1]].type = null;
-            this.placerObjet(joueur2, "joueur");
+    comparerPosition(objet1, objet2) {
+        if (objet1.position - objet2.position == 1 || objet1.position - objet2.position == -1 || objet1.position - objet2.position == 10 || objet1.position - objet2.position == -10) {
+            return true
+        } else {
+            return false
         }
     }
     coordsToPosition(coords) { //transforme les coordonnées en int pour coincider avec les id.
@@ -166,6 +170,50 @@ class Grille {
             this.renderCase(coordOrigine);
             this.renderCase(coordDestination);
         }
+    }
+    casesAccessiblesBis(origin, direction) {
+        let listeCases = [];
+        let i;
+        let j;
+        switch (direction) {
+            case 'droite':
+                i = 0;
+                j = 1;
+                break;
+            case 'gauche':
+                i = 0;
+                j = -1;
+                break;
+            case 'bas':
+                i = 1;
+                j = 0;
+                break;
+            case 'haut':
+                i = -1;
+                j = 0;
+                break;
+
+        }
+        let case1 = [origin[0] + i, origin[1] + j];
+        if (this.grille[case1[0]]) {
+            if (this.grille[case1[0]][case1[1]] && this.grille[case1[0]][case1[1]].statut !== "obstacle") {
+                listeCases.push(case1);
+                let case2 = [origin[0] + (2 * i), origin[1] + (2 * j)];
+                if (this.grille[case2[0]]) {
+                    if (this.grille[case2[0]][case2[1]] && this.grille[case2[0]][case2[1]].statut !== "obstacle") {
+                        listeCases.push(case2);
+                        let case3 = [origin[0] + (3 * i), origin[1] + (3 * j)];
+                        if (this.grille[case3[0]]) {
+                            if (this.grille[case3[0]][case3[1]] && this.grille[case3[0]][case3[1]].statut !== "obstacle") {
+                                listeCases.push(case3);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        return listeCases;
     }
     casesAccessibles(coords) {
         let listeCases = [];
