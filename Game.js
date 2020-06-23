@@ -14,27 +14,28 @@ class Game {
             console.log(this.activePlayer.joueur);
             this.activePlayer.state = "active";
             this.activePlayer.jouer(this.grille);
-          //  var interval = setInterval(this.verificationEtat(), 100);
-           setInterval(() => { //boucle qui sert à savoir quand le joueur a joué, puis a passer au joueur suivant.
-if (this.activePlayer.state == "Tour fini") {
+            //     var interval = setInterval(this.verificationEtat(), 100);
+            setInterval(() => { //boucle qui sert à savoir quand le joueur a joué, puis a passer au joueur suivant.
+                if (this.activePlayer.state == "Tour fini") {
                     this.round++;
-                   this.init();
-                   clearInterval();
-               }
-          }, 100);
+                    this.init();
+                    clearInterval();
+                }
+            }, 100);
 
         }
 
     }
-  //  verificationEtat(){
- //     if (this.activePlayer.state == "Tour fini") {
- //                        this.round++;
- //                        windows.clearInterval(interval);
- //                         this.init();
- //                       }
-                        
-//}
+    //   verificationEtat() {
+    //       if (this.activePlayer.state == "Tour fini") {
+    //          this.round++;
+    //          windows.clearInterval(interval);
+    //          this.init();
+    //      }
+
+    //}
 
 
 }
+
 

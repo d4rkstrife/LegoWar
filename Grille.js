@@ -113,11 +113,8 @@ class Grille {
     }
 
     comparerPosition(objet1, objet2) {
-        if (objet1.position - objet2.position == 1 || objet1.position - objet2.position == -1 || objet1.position - objet2.position == 10 || objet1.position - objet2.position == -10) {
-            return true
-        } else {
-            return false
-        }
+        return (objet1.position - objet2.position === 1 || objet1.position - objet2.position === -1 || objet1.position - objet2.position === 10 || objet1.position - objet2.position === -10);
+
     }
     coordsToPosition(coords) { //transforme les coordonnées en int pour coincider avec les id.
 
@@ -195,24 +192,24 @@ class Grille {
 
         }
         let case1 = [origin[0] + i, origin[1] + j];
-        if (this.grille[case1[0]]) {
-            if (this.grille[case1[0]][case1[1]] && this.grille[case1[0]][case1[1]].statut !== "obstacle") {
-                listeCases.push(case1);
-                let case2 = [origin[0] + (2 * i), origin[1] + (2 * j)];
-                if (this.grille[case2[0]]) {
-                    if (this.grille[case2[0]][case2[1]] && this.grille[case2[0]][case2[1]].statut !== "obstacle") {
-                        listeCases.push(case2);
-                        let case3 = [origin[0] + (3 * i), origin[1] + (3 * j)];
-                        if (this.grille[case3[0]]) {
-                            if (this.grille[case3[0]][case3[1]] && this.grille[case3[0]][case3[1]].statut !== "obstacle") {
-                                listeCases.push(case3);
-                            }
-                        }
-
+        if (this.grille[case1[0]] && this.grille[case1[0]][case1[1]] && this.grille[case1[0]][case1[1]].statut !== "obstacle") {
+            listeCases.push(case1);
+        }
+        let case2 = [origin[0] + (2 * i), origin[1] + (2 * j)];
+        if (this.grille[case2[0]]) {
+            if (this.grille[case2[0]][case2[1]] && this.grille[case2[0]][case2[1]].statut !== "obstacle") {
+                listeCases.push(case2);
+                let case3 = [origin[0] + (3 * i), origin[1] + (3 * j)];
+                if (this.grille[case3[0]]) {
+                    if (this.grille[case3[0]][case3[1]] && this.grille[case3[0]][case3[1]].statut !== "obstacle") {
+                        listeCases.push(case3);
                     }
                 }
+
             }
+
         }
+
         return listeCases;
     }
     casesAccessibles(coords) {
@@ -268,23 +265,23 @@ class Grille {
         }
         //vers le haut
         let case10 = [coords[0] - 1, coords[1]];
-        if (this.grille[case10[0]]) {
-            if (this.grille[case10[0]][case10[1]] && this.grille[case10[0]][case10[1]].statut !== "obstacle") {
-                listeCases.push(case10);
-                let case11 = [coords[0] - 2, coords[1]];
-                if (this.grille[case11[0]]) {
-                    if (this.grille[case11[0]][case11[1]] && this.grille[case11[0]][case11[1]].statut !== "obstacle") {
-                        listeCases.push(case11);
-                        let case12 = [coords[0] - 3, coords[1]];
-                        if (this.grille[case12[0]]) {
-                            if (this.grille[case12[0]][case12[1]] && this.grille[case12[0]][case12[1]].statut !== "obstacle") {
-                                listeCases.push(case12);
-                            }
+        // if (this.grille[case10[0]]) {
+        if (this.grille[case10[0]] && this.grille[case10[0]][case10[1]] && this.grille[case10[0]][case10[1]].statut !== "obstacle") {
+            listeCases.push(case10);
+            let case11 = [coords[0] - 2, coords[1]];
+            if (this.grille[case11[0]]) {
+                if (this.grille[case11[0]][case11[1]] && this.grille[case11[0]][case11[1]].statut !== "obstacle") {
+                    listeCases.push(case11);
+                    let case12 = [coords[0] - 3, coords[1]];
+                    if (this.grille[case12[0]]) {
+                        if (this.grille[case12[0]][case12[1]] && this.grille[case12[0]][case12[1]].statut !== "obstacle") {
+                            listeCases.push(case12);
                         }
-
                     }
+
                 }
             }
+            //   }
         }
 
 
