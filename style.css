@@ -28,6 +28,7 @@ h1{
 h2 {
     font-family: "legothick", sans-serif;
     font-size: 40px;
+    margin-bottom: 10px;
 }
 h3 {
     font-size: 30px;
@@ -41,6 +42,7 @@ main{
     text-align: center;
     background: white;
     border: 5px solid yellow;
+    font-weight: bold;
 }
 
 .background_red {
@@ -80,6 +82,11 @@ td img {
     border: 2px solid grey;
     
 }
+.image_profil{
+    width: 104px;
+    height: 104px;
+    margin-top: 15px;
+}
 @media screen and (max-width: 1100px){
     header {
         height: 70px; 
@@ -101,7 +108,7 @@ td img {
         justify-self: flex-end;
         order: 2;
         width: 45%;
-        height : 145px;
+        height :160px;
         padding: 10px;
     }
     h2, h3 {
@@ -116,13 +123,18 @@ td img {
     .player p {
         margin: 0;
     }
-    .joueur img {
+    .objet img {
         height : 90%;
         margin: 0;
         padding: 0;
     }
     .arme_equipee {
         width: 20px;
+    }
+    .image_profil{
+        width: 48px;
+        height: 48px;
+        margin-top: 0px;
     }
 
 }
@@ -141,7 +153,7 @@ td img {
         justify-self: flex-end;
         order: 2;
         width: 40vw;
-        height : 145px;
+        height : 160px;
         padding: 10px;
     }
     h2, h3 {
@@ -159,7 +171,7 @@ td img {
         height: 10vw;
         padding: 0;
     }
-    .joueur img {
+    .objet img {
         width: 95%;
         height : 95%;
         margin: 0;
