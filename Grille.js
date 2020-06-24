@@ -63,9 +63,7 @@ class Grille {
     }
     //render pour une seule case
     renderCase(coords) {
-        let id = this.coordsToPosition(coords)
-        let td = document.getElementById(id);
-
+        let id = this.coordsToPosition(coords);
         if (this.grille[coords[0]][coords[1]].statut === "case_vide") {
             $(`#${id}`).html('');
             $(`#${id}`).removeClass('objet').addClass('case_vide');
@@ -75,11 +73,10 @@ class Grille {
                 let image = new Image();
                 image.src = `image/${this.grille[coords[0]][coords[1]].content.skin}`
                 $(`#${id}`).append(image);
-                td.className = "objet";
+                $(`#${id}`).removeClass('case_vide').addClass('objet');
             } else if (this.grille[coords[0]][coords[1]].type === "joueur arme") {
                 $(`#${id}`).html('');
                 $(`#${id}`).append(this.grille[coords[0]][coords[1]].content2.image);
-                td.className = "objet";
             }
         }
 
@@ -199,11 +196,10 @@ class Grille {
     }
     marquerPossibilités(coordsArray) {
         coordsArray.forEach(element => {
-            let caseDispo = document.getElementById(this.coordsToPosition(element));
-            if (caseDispo.className === "case_vide") {
-                caseDispo.classList.add("green");
+            if ($(`#${this.coordsToPosition(element)}`).hasClass("case_vide")) {
+                $(`#${this.coordsToPosition(element)}`).addClass("green");
             } else {
-                caseDispo.classList.add("red");
+                $(`#${this.coordsToPosition(element)}`).addClass("red");
             }
 
         })
