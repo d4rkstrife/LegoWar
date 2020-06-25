@@ -109,7 +109,7 @@ class Grille {
     }
 
     comparerPosition(objet1, objet2) {
-        return (objet1.position - objet2.position === 1 || objet1.position - objet2.position === -1 || objet1.position - objet2.position === 10 || objet1.position - objet2.position === -10);
+        return ((objet1.coords[0] === objet2.coords[0] && (objet1.coords[1] - objet2.coords[1] === 1 || objet1.coords[1] - objet2.coords[1] === -1)) || (objet1.coords[1] === objet2.coords[1] && (objet1.coords[0] - objet2.coords[0] === 1 || objet1.coords[0] - objet2.coords[0] === -1)));
     }
     coordsToPosition(coords) { //transforme les coordonnées en int pour coincider avec les id.
         return coords[0] * 10 + coords[1]
@@ -119,7 +119,6 @@ class Grille {
         let a = (position - b) / 10;
         return [a, b];
     }
-
     deplacerJoueur(coordOrigine, coordDestination) {
         if (this.grille[coordDestination[0]][coordDestination[1]].statut === "case_vide" && this.grille[coordOrigine[0]][coordOrigine[1]].type === "joueur") {
             this.grille[coordDestination[0]][coordDestination[1]].statut = "case_occupée";
