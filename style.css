@@ -87,6 +87,15 @@ td img {
     height: 104px;
     margin-top: 15px;
 }
+#console {
+    background-color: honeydew;
+    width : 624px;
+    margin: auto;
+    margin-top: 10px;
+    height : 40px;
+    text-align: center;
+    border: 2px solid black;
+}
 @media screen and (max-width: 1100px){
     header {
         height: 70px; 

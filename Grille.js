@@ -4,6 +4,7 @@ class Grille {
         this.armes = armes;
         this.grille = new Array();
         this.nbrColonnes;
+        this.state = "préparation";
     }
     genererGrille(nbrLignes, nbrColonnes, nbrObstacles) {
         this.nbrColonnes = nbrColonnes;

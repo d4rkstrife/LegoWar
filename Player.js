@@ -10,7 +10,8 @@ class Player {
         this.damage = this.armeEquipee.damage;
         this.image = new Image();
         this.image.src = `image/${data[2]}`;
-        this.state = "En attente"
+        this.state = "En attente";
+        this.positionCombat = "En préparation"
     }
     seDeplacer(grille) {
 
@@ -43,9 +44,14 @@ class Player {
 
 
                     } else {
-                        alert("Pas encore prêt au combat");
+                        alert("Avancez au corps à corps pour attaquer");
 
                     }
+                    if (grille.comparerPosition(grille.joueurs[0], grille.joueurs[1]) === true) {
+                        grille.state = "fight";
+                        this.choisirPostureCombat();
+                    }
+                    console.log(grille.state)
                     td.forEach(element => {
                         element.classList.remove("red");
                         element.classList.remove("green");
@@ -67,8 +73,24 @@ class Player {
         damageElt.text(`${this.armeEquipee.nom} : ${this.damage} dégats`);
         let armeElt = $(`#arme_${this.joueur}`);
         armeElt.attr("src", this.armeEquipee.image.src);
+        $('#console').html(`${this.joueur} équipe l'arme ${this.armeEquipee.nom}`);
     }
     jouer(grille) {
-        this.seDeplacer(grille)
+        if (grille.state === "fight") {
+            $('#console').html(`Il est l heure de se battre`);
+        } else {
+            $('#console').html(`${this.joueur} doit se déplacer.`)
+            this.seDeplacer(grille);
+        }
+    }
+    attaquer(joueur) {
+        if (joueur.positionCombat === "attaque") {
+            joueur.pv = joueur.pv - this.damage;
+        } else {
+            joueur.pv = joueur.pv - (this.damage / 2);
+        }
+    }
+    choisirPostureCombat() {
+
     }
 }
