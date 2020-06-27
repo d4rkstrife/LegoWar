@@ -37,6 +37,36 @@ main{
     display: flex;
     justify-content: space-around;
 }
+.fight {
+    display : none;
+    height: 120px;
+    width: 26%;
+    text-align: center;
+    background-color: honeydew;
+    border: 2px solid red;
+    position : absolute;
+    top: 50%;
+    left: 37%;
+}
+.fight h2 {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+.fight button {
+    height: 30px;
+    width: 40%;
+    font-weight: bold;
+}
+#attacking_player {
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+#attack_button {
+    background-color: red;
+}
+#def_button {
+    background-color: lightgreen;
+}
 .player{
     width: 20%;
     text-align: center;

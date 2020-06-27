@@ -91,6 +91,22 @@ class Player {
         }
     }
     choisirPostureCombat() {
+        this.positionCombat = "En attente";
+        $('.fight').show();
+        $('#attacking_player').html(this.joueur);
+        if (this.state === "active") {
+            $('#attack_button').one('click', () => {
+                $('.fight').hide();
+                this.positionCombat = "attaque";
+                console.log(this.positionCombat)
+            });
+            $('#def_button').one('click', () => {
+                $('.fight').hide();
+                this.positionCombat = "défend";
+                console.log(this.positionCombat)
+            });
+        }
+
 
     }
 }
