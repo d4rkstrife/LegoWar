@@ -49,7 +49,7 @@ class Player {
                     }
                     if (grille.comparerPosition(grille.joueurs[0], grille.joueurs[1]) === true) {
                         grille.state = "fight";
-                        this.positionCombat = "entre combat"
+                        this.state = "entre combat"
                     } else {
                         this.state = "Tour fini";
                     }
@@ -78,23 +78,25 @@ class Player {
     }
     attaquer(joueur) {
         if (joueur.positionCombat === "attaque") {
-            joueur.pv = joueur.pv - this.damage;
+            joueur.pv = Math.floor(joueur.pv - this.damage);
         } else {
-            joueur.pv = joueur.pv - (this.damage / 2);
+            joueur.pv = Math.floor(joueur.pv - (this.damage / 2));
         }
     }
     choisirPostureCombat() {
         this.positionCombat = "En attente";
         $(`#fight_${this.joueur}`).show();
-        if (this.state === "active") {
+        if (this.state === "combat") {
             $(`#attack_button_${this.joueur}`).one('click', () => {
                 $(`#fight_${this.joueur}`).hide();
                 this.positionCombat = "attaque";
+                this.state = "Tour fini";
                 console.log(this.positionCombat)
             });
             $(`#def_button_${this.joueur}`).one('click', () => {
                 $(`#fight_${this.joueur}`).hide();
                 this.positionCombat = "défend";
+                this.state = "Tour fini";
                 console.log(this.positionCombat)
             });
         }
