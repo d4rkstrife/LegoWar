@@ -16,14 +16,21 @@ class Game {
       this.passivePlayer = this.joueurs[j];
       this.activePlayer.state = "active";
       if (this.grille.state === "fight") {
+        this.activePlayer.state = "combat";
         this.fight(this.activePlayer, this.passivePlayer);
       } else {
-        this.activePlayer.jouer(this.grille);
+        this.activePlayer.seDeplacer(this.grille);
       }
       setInterval(() => { //boucle qui sert à savoir quand le joueur a joué, puis a passer au joueur suivant.
         if (this.activePlayer.state === "Tour fini") {
           this.round++;
+          console.log(this.activePlayer.pv, this.passivePlayer.pv)
           this.init();
+        }
+      }, 100);
+      setInterval(() => { //boucle qui sert à savoir quand le joueur entre en combat
+        if (this.activePlayer.positionCombat === "entre combat") {
+          this.fight(this.activePlayer, this.passivePlayer);
         }
       }, 100);
 
@@ -34,14 +41,13 @@ class Game {
     activePlayer.choisirPostureCombat();
     setInterval(() => { //boucle qui sert à savoir quand le joueur a choisi sa posture.
       if (activePlayer.positionCombat === "attaque") {
-        console.log(`${this.activePlayer.joueur} attaque`);
         activePlayer.attaquer(passivePlayer);
-        this.activePlayer.state = "Tour fini";
+
       } else if (activePlayer.positionCombat === "défend") {
         console.log("il defend")
         this.activePlayer.state = "Tour fini";
       }
-    }, 2000);
+    }, 100);
 
   }
 

@@ -61,10 +61,10 @@ main{
     margin-top: 6px;
     margin-bottom: 10px;
 }
-#attack_button {
+.attack_button {
     background-color: red;
 }
-#def_button {
+.def_button {
     background-color: lightgreen;
 }
 .player{

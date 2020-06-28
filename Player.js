@@ -49,7 +49,9 @@ class Player {
                     }
                     if (grille.comparerPosition(grille.joueurs[0], grille.joueurs[1]) === true) {
                         grille.state = "fight";
-                        this.choisirPostureCombat();
+                        this.positionCombat = "entre combat"
+                    } else {
+                        this.state = "Tour fini";
                     }
                     console.log(grille.state)
                     td.forEach(element => {
@@ -57,7 +59,7 @@ class Player {
                         element.classList.remove("green");
                     })
                     cases = [];
-                    this.state = "Tour fini";
+
                 }
 
             })
@@ -73,15 +75,6 @@ class Player {
         damageElt.text(`${this.armeEquipee.nom} : ${this.damage} dégats`);
         let armeElt = $(`#arme_${this.joueur}`);
         armeElt.attr("src", this.armeEquipee.image.src);
-        $('#console').html(`${this.joueur} équipe l'arme ${this.armeEquipee.nom}`);
-    }
-    jouer(grille) {
-        if (grille.state === "fight") {
-            $('#console').html(`Il est l heure de se battre`);
-        } else {
-            $('#console').html(`${this.joueur} doit se déplacer.`)
-            this.seDeplacer(grille);
-        }
     }
     attaquer(joueur) {
         if (joueur.positionCombat === "attaque") {
@@ -92,16 +85,15 @@ class Player {
     }
     choisirPostureCombat() {
         this.positionCombat = "En attente";
-        $('.fight').show();
-        $('#attacking_player').html(this.joueur);
+        $(`#fight_${this.joueur}`).show();
         if (this.state === "active") {
-            $('#attack_button').one('click', () => {
-                $('.fight').hide();
+            $(`#attack_button_${this.joueur}`).one('click', () => {
+                $(`#fight_${this.joueur}`).hide();
                 this.positionCombat = "attaque";
                 console.log(this.positionCombat)
             });
-            $('#def_button').one('click', () => {
-                $('.fight').hide();
+            $(`#def_button_${this.joueur}`).one('click', () => {
+                $(`#fight_${this.joueur}`).hide();
                 this.positionCombat = "défend";
                 console.log(this.positionCombat)
             });
