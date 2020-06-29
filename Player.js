@@ -86,20 +86,19 @@ class Player {
     choisirPostureCombat() {
         this.positionCombat = "En attente";
         $(`#fight_${this.joueur}`).show();
-        if (this.state === "combat") {
-            $(`#attack_button_${this.joueur}`).one('click', () => {
-                $(`#fight_${this.joueur}`).hide();
-                this.positionCombat = "attaque";
-                this.state = "Tour fini";
-                console.log(this.positionCombat)
-            });
-            $(`#def_button_${this.joueur}`).one('click', () => {
-                $(`#fight_${this.joueur}`).hide();
-                this.positionCombat = "défend";
-                this.state = "Tour fini";
-                console.log(this.positionCombat)
-            });
-        }
+        $(`#attack_button_${this.joueur}`).one('click', () => {
+            $(`#fight_${this.joueur}`).hide();
+            this.positionCombat = "attaque";
+            this.state = "Tour fini";
+            console.log(this.positionCombat)
+        });
+        $(`#def_button_${this.joueur}`).one('click', () => {
+            $(`#fight_${this.joueur}`).hide();
+            this.positionCombat = "défend";
+            this.state = "Tour fini";
+            console.log(this.positionCombat)
+        });
+
 
 
     }
