@@ -22,40 +22,37 @@ class Player {
                 cases.push(grille.coordsToPosition(element));
             })
         })
-
-        let td = document.querySelectorAll('td');
-        td.forEach(element => {
-            element.addEventListener('click', () => {
-
-                if (this.state == "active" && cases.indexOf(parseInt(element.id)) !== -1) {
-                    let elementCoords = grille.positionToCoord(element.id);
+        let that = this;
+        $('td').each(function () {
+            $(this).one("click", () => {
+                if (that.state == "active" && cases.indexOf(parseInt(this.id)) !== -1) {
+                    let elementCoords = grille.positionToCoord(this.id);
                     if (grille.grille[elementCoords[0]][elementCoords[1]].statut == "case_vide") {
-                        grille.deplacerJoueur(this.coords, elementCoords);
-                        this.coords = elementCoords;
-                        this.position = grille.coordsToPosition(this.coords);
+                        grille.deplacerJoueur(that.coords, elementCoords);
+                        that.coords = elementCoords;
+                        that.position = grille.coordsToPosition(that.coords);
 
 
                     } else if (grille.grille[elementCoords[0]][elementCoords[1]].type == "arme") {
-                        this.equiperArme(grille.grille[elementCoords[0]][elementCoords[1]]);
-                        grille.deplacerJoueur(this.coords, elementCoords);
-                        this.coords = elementCoords;
-                        this.position = grille.coordsToPosition(this.coords);
+                        that.equiperArme(grille.grille[elementCoords[0]][elementCoords[1]]);
+                        grille.deplacerJoueur(that.coords, elementCoords);
+                        that.coords = elementCoords;
+                        that.position = grille.coordsToPosition(that.coords);
 
 
                     } else {
                         alert("Pas encore prêt au combat");
 
                     }
-                    td.forEach(element => {
-                        element.classList.remove("red");
-                        element.classList.remove("green");
+                    $('td').each(function () {
+                        $(this).removeClass('red');
+                        $(this).removeClass('green');
                     })
                     cases = [];
-                    this.state = "Tour fini";
+                    that.state = "Tour fini";
                 }
-
             })
-        })
+        });
     }
     equiperArme(emplacement) {
         let arme = emplacement.content
