@@ -32,6 +32,7 @@ class Player {
                         grille.deplacerJoueur(that.coords, elementCoords);
                         that.coords = elementCoords;
                         that.position = grille.coordsToPosition(that.coords);
+                        $('.logs').append(`<p>${that.joueur} se déplace en ${that.coords}</p>`)
 
 
                     } else if (grille.grille[elementCoords[0]][elementCoords[1]].type == "arme") {
@@ -54,9 +55,7 @@ class Player {
                         game.fight();
                     } else {
                         cases = [];
-                        that.state = "Tour fini";
-                        game.round++;
-                        game.init()
+                        that.finirTour(game);
                     }
 
                 }
@@ -83,33 +82,42 @@ class Player {
             } else {
                 console.log("error")
             }
+            if (joueur.pv <= 0) {
+                joueur.state = "mort"
+            }
         }
     }
     choisirPostureCombat(game) {
 
         if (this.state === "active") {
-            $(`#fight_${this.joueur}`).show();
+            $(`#fight_${this.joueur}`).show(0);
             $(`#attack_button_${this.joueur}`).on('click', () => {
-                $(`#fight_${this.joueur}`).hide();
+                $(`#attack_button_${this.joueur}`).unbind('click');
+                $(`#def_button_${this.joueur}`).unbind('click');
+                $(`#fight_${this.joueur}`).hide(0);
                 this.positionCombat = "attaque";
                 this.attaquer(game.passivePlayer);
                 $(`#points_vie_${game.activePlayer.joueur}`).html(game.activePlayer.pv);
                 $(`#points_vie_${game.passivePlayer.joueur}`).html(game.passivePlayer.pv);
-                this.state = "Tour fini";
-                game.round++;
-                game.init();
+                this.finirTour(game);
+
             });
             $(`#def_button_${this.joueur}`).on('click', () => {
-                $(`#fight_${this.joueur}`).hide();
+                $(`#attack_button_${this.joueur}`).unbind('click');
+                $(`#def_button_${this.joueur}`).unbind('click');
+                $(`#fight_${this.joueur}`).hide(0);
                 this.positionCombat = "défend";
                 $(`#points_vie_${game.activePlayer.joueur}`).html(game.activePlayer.pv);
                 $(`#points_vie_${game.passivePlayer.joueur}`).html(game.passivePlayer.pv);
-                this.state = "Tour fini";
-                game.round++;
-                game.init();
+                this.finirTour(game);
             });
 
         }
 
+    }
+    finirTour(game) {
+        this.state = "Tour fini";
+        game.round++;
+        game.init();
     }
 }

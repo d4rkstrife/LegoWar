@@ -7,8 +7,8 @@ const armes = [
 
 ];
 const joueurs = [
-    ["joueur1", 50, "Joueur1.png"],
-    ["joueur2", 50, "Joueur2.png"]
+    ["joueur1", 100, "Joueur1.png"],
+    ["joueur2", 100, "Joueur2.png"]
 ]
 let app = new App(armes, joueurs);
 app.run();

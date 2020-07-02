@@ -120,34 +120,47 @@ class Grille {
         let a = (position - b) / 10;
         return [a, b];
     }
+    caseDestination(coordDestination, statutDestination, typeDestination, contentDestination, content2Destination) {
+        this.grille[coordDestination[0]][coordDestination[1]].statut = statutDestination;
+        this.grille[coordDestination[0]][coordDestination[1]].type = typeDestination;
+        if (contentDestination !== -1) {
+            this.grille[coordDestination[0]][coordDestination[1]].content = contentDestination;
+        }
+        if (content2Destination !== -1) {
+            this.grille[coordDestination[0]][coordDestination[1]].content2 = content2Destination;
+        }
+    }
+    caseOrigine(coordOrigine, contentOrigin, content2Origin, typeOrigin, statutOrigin) {
+        if (contentOrigin !== -1) {
+            this.grille[coordOrigine[0]][coordOrigine[1]].content = contentOrigin;
+        }
+        if (content2Origin !== -1) {
+            this.grille[coordOrigine[0]][coordOrigine[1]].content2 = content2Origin;
+        }
+
+        this.grille[coordOrigine[0]][coordOrigine[1]].type = typeOrigin;
+        if (statutOrigin !== -1) {
+            this.grille[coordOrigine[0]][coordOrigine[1]].statut = statutOrigin;
+        }
+
+    }
     deplacerJoueur(coordOrigine, coordDestination) {
         if (this.grille[coordDestination[0]][coordDestination[1]].statut === "case_vide" && this.grille[coordOrigine[0]][coordOrigine[1]].type === "joueur") {
-            this.grille[coordDestination[0]][coordDestination[1]].statut = "case_occupée";
-            this.grille[coordDestination[0]][coordDestination[1]].type = "joueur";
-            this.grille[coordDestination[0]][coordDestination[1]].content = this.grille[coordOrigine[0]][coordOrigine[1]].content;
-            this.grille[coordOrigine[0]][coordOrigine[1]].content = null;
-            this.grille[coordOrigine[0]][coordOrigine[1]].type = null;
-            this.grille[coordOrigine[0]][coordOrigine[1]].statut = "case_vide";
+            this.caseDestination(coordDestination, "case_occupée", "joueur", this.grille[coordOrigine[0]][coordOrigine[1]].content, -1);
+            this.caseOrigine(coordOrigine, null, -1, null, "case_vide");
+
 
         } else if ((this.grille[coordDestination[0]][coordDestination[1]].statut === "case_occupée" && this.grille[coordDestination[0]][coordDestination[1]].type === "arme") && this.grille[coordOrigine[0]][coordOrigine[1]].type == "joueur") {
-            this.grille[coordDestination[0]][coordDestination[1]].type = "joueur arme";
-            this.grille[coordDestination[0]][coordDestination[1]].content2 = this.grille[coordOrigine[0]][coordOrigine[1]].content;
-            this.grille[coordOrigine[0]][coordOrigine[1]].content = null;
-            this.grille[coordOrigine[0]][coordOrigine[1]].type = null;
-            this.grille[coordOrigine[0]][coordOrigine[1]].statut = "case_vide";
+            this.caseDestination(coordDestination, "case_occupée", "joueur arme", -1, this.grille[coordOrigine[0]][coordOrigine[1]].content);
+            this.caseOrigine(coordOrigine, null, -1, null, "case_vide");
 
         } else if (this.grille[coordOrigine[0]][coordOrigine[1]].type === "joueur arme" && this.grille[coordDestination[0]][coordDestination[1]].statut === "case_vide") {
-            this.grille[coordDestination[0]][coordDestination[1]].statut = "case_occupée";
-            this.grille[coordDestination[0]][coordDestination[1]].type = "joueur";
-            this.grille[coordDestination[0]][coordDestination[1]].content = this.grille[coordOrigine[0]][coordOrigine[1]].content2;
-            this.grille[coordOrigine[0]][coordOrigine[1]].content2 = null;
-            this.grille[coordOrigine[0]][coordOrigine[1]].type = "arme";
+            this.caseDestination(coordDestination, "case_occupée", "joueur", this.grille[coordOrigine[0]][coordOrigine[1]].content2, -1);
+            this.caseOrigine(coordOrigine, -1, null, "arme", -1);
 
         } else if (this.grille[coordOrigine[0]][coordOrigine[1]].type === "joueur arme" && this.grille[coordDestination[0]][coordDestination[1]].type === "arme") {
-            this.grille[coordDestination[0]][coordDestination[1]].type = "joueur arme";
-            this.grille[coordDestination[0]][coordDestination[1]].content2 = this.grille[coordOrigine[0]][coordOrigine[1]].content2;
-            this.grille[coordOrigine[0]][coordOrigine[1]].content2 = null;
-            this.grille[coordOrigine[0]][coordOrigine[1]].type = "arme";
+            this.caseDestination(coordDestination, "case_occupée", "joueur arme", -1, this.grille[coordOrigine[0]][coordOrigine[1]].content2);
+            this.caseOrigine(coordOrigine, -1, null, "arme", -1);
         }
         this.renderCase(coordOrigine);
         this.renderCase(coordDestination);
