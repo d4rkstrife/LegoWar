@@ -51,6 +51,9 @@ class Player {
                         $(this).removeClass('green');
                     })
                     if (grille.comparerPosition(grille.joueurs[0], grille.joueurs[1]) === true) {
+                        $('#message_combat').show().animate({ width: "-=10%" });
+                        $('#sound1')[0].play();
+
                         grille.state = "fight";
                         game.fight();
                     } else {
@@ -72,18 +75,23 @@ class Player {
         damageElt.text(`${this.armeEquipee.nom} : ${this.damage} dégats`);
         let armeElt = $(`#arme_${this.joueur}`);
         armeElt.attr("src", this.armeEquipee.image.src);
+        $('.logs').append(`<p>${this.joueur} ramasse l'arme  ${this.armeEquipee.nom}</p>`)
     }
     attaquer(joueur) {
         if (this.state === "active") {
             if (joueur.positionCombat === "attaque") {
                 joueur.pv = Math.floor(joueur.pv - this.damage);
+                $('.logs').append(`<p>${this.joueur} attaque ${joueur.joueur} pour ${this.damage} points de dégats.</p>`)
+
             } else if (joueur.positionCombat === "défend") {
                 joueur.pv = Math.floor(joueur.pv - (this.damage / 2));
+                $('.logs').append(`<p>${this.joueur} attaque ${joueur.joueur} pour ${this.damage / 2} points de dégats.</p>`)
             } else {
                 console.log("error")
             }
             if (joueur.pv <= 0) {
-                joueur.state = "mort"
+                joueur.state = "mort";
+                $('.logs').append(`<p>${joueur} est mort.</p>`)
             }
         }
     }
@@ -96,7 +104,9 @@ class Player {
                 $(`#def_button_${this.joueur}`).unbind('click');
                 $(`#fight_${this.joueur}`).hide(0);
                 this.positionCombat = "attaque";
+                $('.logs').append(`<p>${this.joueur} décide d'attaquer.</p>`);
                 this.attaquer(game.passivePlayer);
+                $('#sound2')[0].play();
                 $(`#points_vie_${game.activePlayer.joueur}`).html(game.activePlayer.pv);
                 $(`#points_vie_${game.passivePlayer.joueur}`).html(game.passivePlayer.pv);
                 this.finirTour(game);
@@ -107,6 +117,7 @@ class Player {
                 $(`#def_button_${this.joueur}`).unbind('click');
                 $(`#fight_${this.joueur}`).hide(0);
                 this.positionCombat = "défend";
+                $('.logs').append(`<p>${this.joueur} décide de défendre.</p>`);
                 $(`#points_vie_${game.activePlayer.joueur}`).html(game.activePlayer.pv);
                 $(`#points_vie_${game.passivePlayer.joueur}`).html(game.passivePlayer.pv);
                 this.finirTour(game);

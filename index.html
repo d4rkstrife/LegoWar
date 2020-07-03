@@ -12,9 +12,12 @@
 <body>
     <header>
         <h1>LEGO WAR</h1>
+        <button id="show_logs">Logs</button>
     </header>
 
     <main>
+
+        <img src="image/Fight-PNG-Pic.png" alt="message combat" id="message_combat">
         <div class="player" id="elt_joueur1">
             <h2>JOUEUR 1</h2>
             <img src="image/Joueur1.png" alt="image joueur1" class="image_profil">
@@ -54,13 +57,23 @@
             <button class="attack_button" id="attack_button_joueur2">Attaquer</button>
             <button class="def_button" id="def_button_joueur2">Défendre</button>
         </div>
-
+        <div class="logs">
+            <h5>Que s'est il passé?</h3>
+        </div>
+        <audio src="sound/fight.mp3" class="sound" controls id="sound1"></audio>
+        <audio src="sound/sword.mp3" class="sound" controls id="sound2"></audio>
     </main>
-    <div class="logs">
-        <h5>Logs</h3>
-    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script type="text/javascript">$('#show_logs').click(() => {
+            if ($('.logs').css('display') === 'none') {
+                $('.logs').show();
+            } else {
+                $('.logs').hide();
+            }
+        })</script>
+    })</script>
     <script src="Player.js"></script>
     <script src="Arme.js"></script>
     <script src="Grille.js"></script>
