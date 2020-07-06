@@ -19,7 +19,7 @@ class Game {
 
             this.activePlayer.state = "active";
             if (this.grille.state === "fight") {
-                this.fight();
+                this.activePlayer.choisirPostureCombat(this);
             } else {
                 this.activePlayer.seDeplacer(this.grille, this);
             }
@@ -27,8 +27,10 @@ class Game {
 
 
     }
-    fight() {
-        this.activePlayer.choisirPostureCombat(this);
+    finirTour() {
+        this.activePlayer.state = "Tour fini";
+        this.round++;
+        this.init();
     }
 
 

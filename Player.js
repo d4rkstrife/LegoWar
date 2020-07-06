@@ -11,7 +11,7 @@ class Player {
         this.image = new Image();
         this.image.src = `image/${data[2]}`;
         this.state = "En attente";
-        this.positionCombat = "défend";
+        this.positionCombat = "attaque";
     }
     seDeplacer(grille, game) {
 
@@ -55,10 +55,10 @@ class Player {
                         $('#sound1')[0].play();
 
                         grille.state = "fight";
-                        game.fight();
+                        that.choisirPostureCombat(game);
                     } else {
                         cases = [];
-                        that.finirTour(game);
+                        game.finirTour();
                     }
 
                 }
@@ -91,44 +91,40 @@ class Player {
             }
             if (joueur.pv <= 0) {
                 joueur.state = "mort";
-                $('.logs').append(`<p>${joueur} est mort.</p>`)
+                $('.logs').append(`<p>${joueur.joueur} est mort.</p>`)
             }
         }
+    }
+    postureCombatChoisit(game, postureChoisit) {
+        $(`#attack_button_${this.joueur}`).unbind('click');
+        $(`#def_button_${this.joueur}`).unbind('click');
+        $(`#fight_${this.joueur}`).hide(0);
+        this.positionCombat = postureChoisit;
+        if (postureChoisit === "attaque") {
+            $('.logs').append(`<p>${this.joueur} décide d'attaquer.</p>`);
+            this.attaquer(game.passivePlayer);
+            $('#sound2')[0].play();
+        } else {
+            $('.logs').append(`<p>${this.joueur} décide de défendre.</p>`);
+        }
+        $(`#points_vie_${game.activePlayer.joueur}`).html(game.activePlayer.pv);
+        $(`#points_vie_${game.passivePlayer.joueur}`).html(game.passivePlayer.pv);
+        game.finirTour();
+
     }
     choisirPostureCombat(game) {
 
         if (this.state === "active") {
             $(`#fight_${this.joueur}`).show(0);
             $(`#attack_button_${this.joueur}`).on('click', () => {
-                $(`#attack_button_${this.joueur}`).unbind('click');
-                $(`#def_button_${this.joueur}`).unbind('click');
-                $(`#fight_${this.joueur}`).hide(0);
-                this.positionCombat = "attaque";
-                $('.logs').append(`<p>${this.joueur} décide d'attaquer.</p>`);
-                this.attaquer(game.passivePlayer);
-                $('#sound2')[0].play();
-                $(`#points_vie_${game.activePlayer.joueur}`).html(game.activePlayer.pv);
-                $(`#points_vie_${game.passivePlayer.joueur}`).html(game.passivePlayer.pv);
-                this.finirTour(game);
-
+                this.postureCombatChoisit(game, "attaque");
             });
+
             $(`#def_button_${this.joueur}`).on('click', () => {
-                $(`#attack_button_${this.joueur}`).unbind('click');
-                $(`#def_button_${this.joueur}`).unbind('click');
-                $(`#fight_${this.joueur}`).hide(0);
-                this.positionCombat = "défend";
-                $('.logs').append(`<p>${this.joueur} décide de défendre.</p>`);
-                $(`#points_vie_${game.activePlayer.joueur}`).html(game.activePlayer.pv);
-                $(`#points_vie_${game.passivePlayer.joueur}`).html(game.passivePlayer.pv);
-                this.finirTour(game);
+                this.postureCombatChoisit(game, "défend");
             });
 
         }
 
-    }
-    finirTour(game) {
-        this.state = "Tour fini";
-        game.round++;
-        game.init();
     }
 }

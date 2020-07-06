@@ -47,7 +47,7 @@ main{
 }
 #message_combat {
     display : none;
-    width : 650px;
+    width : 40%;
     position: absolute;
 }
 .fight {
@@ -205,6 +205,15 @@ td img {
         height: 48px;
         margin-top: 0px;
     }
+    .fight {
+           width: 40%;
+           top: 50%;
+           left: 30%;
+       }
+       #message_combat {
+          width : 60%;
+          position: absolute;
+      }
 
 }
 @media screen and (max-width: 615px){
@@ -246,4 +255,13 @@ td img {
         margin: 0;
         padding: 0;
     }
+    .fight {
+           width: 50%;
+           top: 30%;
+           left: 25%;
+       }
+       #message_combat {
+          width : 80%;
+          position: absolute;
+      }
 }
