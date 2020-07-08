@@ -1,6 +1,6 @@
 const armes = [
     ["Couteau", 10, "couteau.png"],
-    ["Epée", 15, "épée.png"],
+    ["Epée", 16, "épée.png"],
     ["Hache", 20, "hache.png"],
     ["Faux", 18, "faux.png"],
     ["Sabre", 22, "sabre.png"]

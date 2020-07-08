@@ -26,9 +26,10 @@ header {
 }
 h1{
     font-family: "legothick", sans-serif;
-    width: 270px;
+    width: 300px;
     padding: 10px;
     text-align: center;
+    margin-bottom: 10px;
     font-size: 60px;
     background-color: red;
 
@@ -40,6 +41,7 @@ h2 {
 }
 h3 {
     font-size: 30px;
+    margin : 20px 0 15px 0
 }
 main{
     display: flex;
@@ -49,6 +51,13 @@ main{
     display : none;
     width : 40%;
     position: absolute;
+}
+.position_combat {
+    width: 50%;
+    padding-top: 10px;
+    padding-bottom: 10px ;
+    margin: auto;
+    text-align: center;
 }
 .fight {
     display : none;
@@ -73,6 +82,7 @@ main{
 #attacking_player {
     margin-top: 6px;
     margin-bottom: 10px;
+    text-transform: capitalize;
 }
 .attack_button {
     background-color: red;
@@ -152,6 +162,16 @@ td img {
 .logs p {
     margin:0;
 }
+.position_container {
+    display : flex;
+    justify-content: center;
+}
+.position_container p {
+    height: 25px;
+    width: 75px;
+    padding-top: 5px;
+    border: 2px solid black;
+}
 @media screen and (max-width: 1100px){
     header {
         height: 70px; 
@@ -177,7 +197,7 @@ td img {
         justify-self: flex-end;
         order: 2;
         width: 45%;
-        height :160px;
+        height :250px;
         padding: 10px;
     }
     h2, h3 {
@@ -231,7 +251,7 @@ td img {
         justify-self: flex-end;
         order: 2;
         width: 40vw;
-        height : 160px;
+        height : 250px;
         padding: 10px;
     }
     h2, h3 {

@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="style.css">
     <title>Lego War</title>
 </head>
@@ -17,7 +16,6 @@
 
     <main>
 
-        <img src="image/Fight-PNG-Pic.png" alt="message combat" id="message_combat">
         <div class="player" id="elt_joueur1">
             <h2>JOUEUR 1</h2>
             <img src="image/Joueur1.png" alt="image joueur1" class="image_profil">
@@ -28,11 +26,15 @@
                 <img src="image/couteau.png" alt="arme" id="arme_joueur1" class="arme_equipee">
                 <p id="degats_joueur1" class="degats">Couteau : 10 dégats</p></br>
             </div>
+            <div class="position_container">
+                <p id="position_attaque_joueur1" class="position_attaque red">Normale</p>
+                <p id="position_defense_joueur1" class="position_défense">Défense</p>
+            </div>
 
         </div>
 
         <table id="grille_container"></table>
-        <div class="player" id="elt_joueur2">
+        <div class="player" id="elt_joueur2" class="col-lg-2 col-xs-6">
             <h2>JOUEUR 2</h2>
             <img src="image/Joueur2.png" alt="image joueur2" class="image_profil">
             <h3>Points de vie</h3>
@@ -42,21 +44,18 @@
                 <img src="image/couteau.png" alt="arme" id="arme_joueur2" class="arme_equipee">
                 <p id="degats_joueur2" class="degats">Couteau : 10 dégats</p>
             </div>
+            <div class="position_container">
+                <p id="position_attaque_joueur2" class="position_attaque red">Normale</p>
+                <p id="position_defense_joueur2" class="position_défense">Défense</p>
+            </div>
+
+
 
 
         </div>
-        <div class="fight" id="fight_joueur1">
-            <h2>FIGHT!!</h2>
-            <p id="attacking_player">Joueur1</p>
-            <button class="attack_button" id="attack_button_joueur1">Attaquer</button>
-            <button class="def_button" id="def_button_joueur1">Défendre</button>
-        </div>
-        <div class="fight" id="fight_joueur2">
-            <h2>FIGHT!!</h2>
-            <p id="attacking_player">Joueur2</p>
-            <button class="attack_button" id="attack_button_joueur2">Attaquer</button>
-            <button class="def_button" id="def_button_joueur2">Défendre</button>
-        </div>
+        <img src="image/Fight-PNG-Pic.png" alt="message combat" id="message_combat">
+
+        <div class="fight" id="fight"></div>
         <div class="logs">
             <h5>Que s'est il passé?</h3>
         </div>

@@ -18,7 +18,9 @@ class Game {
         } else {
 
             this.activePlayer.state = "active";
-            if (this.grille.state === "fight") {
+            if (this.grille.state === "possible fight") {
+                this.activePlayer.engagerCombat(this.grille, this)
+            } else if (this.grille.state === "fight") {
                 this.activePlayer.choisirPostureCombat(this);
             } else {
                 this.activePlayer.seDeplacer(this.grille, this);

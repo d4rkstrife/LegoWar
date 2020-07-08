@@ -11,7 +11,7 @@ class Player {
         this.image = new Image();
         this.image.src = `image/${data[2]}`;
         this.state = "En attente";
-        this.positionCombat = "attaque";
+        this.positionCombat = "Normale";
     }
     seDeplacer(grille, game) {
 
@@ -26,8 +26,9 @@ class Player {
         let that = this;
         $('td').each(function () {
             $(this).one("click", () => {
+                let elementCoords = grille.positionToCoord(this.id);
                 if (that.state == "active" && cases.indexOf(parseInt(this.id)) !== -1) {
-                    let elementCoords = grille.positionToCoord(this.id);
+
                     if (grille.grille[elementCoords[0]][elementCoords[1]].statut == "case_vide") {
                         grille.deplacerJoueur(that.coords, elementCoords);
                         that.coords = elementCoords;
@@ -51,15 +52,12 @@ class Player {
                         $(this).removeClass('green');
                     })
                     if (grille.comparerPosition(grille.joueurs[0], grille.joueurs[1]) === true) {
-                        $('#message_combat').show().animate({ width: "-=10%" });
-                        $('#sound1')[0].play();
-
-                        grille.state = "fight";
-                        that.choisirPostureCombat(game);
+                        grille.state = "possible fight";
+                        game.finirTour();
                     } else {
-                        cases = [];
                         game.finirTour();
                     }
+                    cases = [];
 
                 }
             })
@@ -79,7 +77,7 @@ class Player {
     }
     attaquer(joueur) {
         if (this.state === "active") {
-            if (joueur.positionCombat === "attaque") {
+            if (joueur.positionCombat === "Normale") {
                 joueur.pv = Math.floor(joueur.pv - this.damage);
                 $('.logs').append(`<p>${this.joueur} attaque ${joueur.joueur} pour ${this.damage} points de dégats.</p>`)
 
@@ -90,34 +88,53 @@ class Player {
                 console.log("error")
             }
             if (joueur.pv <= 0) {
+                joueur.pv = 0;
                 joueur.state = "mort";
                 $('.logs').append(`<p>${joueur.joueur} est mort.</p>`)
             }
+            $(`#points_vie_${this.joueur}`).html(this.pv);
+            $(`#points_vie_${joueur.joueur}`).html(joueur.pv);
+
         }
     }
     postureCombatChoisit(game, postureChoisit) {
-        $(`#attack_button_${this.joueur}`).unbind('click');
-        $(`#def_button_${this.joueur}`).unbind('click');
-        $(`#fight_${this.joueur}`).hide(0);
+        $('#fight').hide(0);
         this.positionCombat = postureChoisit;
-        if (postureChoisit === "attaque") {
+        if (postureChoisit === "Normale") {
             $('.logs').append(`<p>${this.joueur} décide d'attaquer.</p>`);
+            if ($(`#position_attaque_${this.joueur}`).hasClass("red")) {
+
+            } else {
+                $(`#position_defense_${this.joueur}`).removeClass("green");
+                $(`#position_attaque_${this.joueur}`).addClass("red");
+            }
             this.attaquer(game.passivePlayer);
             $('#sound2')[0].play();
         } else {
+            if ($(`#position_attaque_${this.joueur}`).hasClass("red")) {
+                $(`#position_attaque_${this.joueur}`).removeClass("red");
+                $(`#position_defense_${this.joueur}`).addClass("green");
+            }
+
+
             $('.logs').append(`<p>${this.joueur} décide de défendre.</p>`);
         }
-        $(`#points_vie_${game.activePlayer.joueur}`).html(game.activePlayer.pv);
-        $(`#points_vie_${game.passivePlayer.joueur}`).html(game.passivePlayer.pv);
         game.finirTour();
 
     }
     choisirPostureCombat(game) {
 
         if (this.state === "active") {
-            $(`#fight_${this.joueur}`).show(0);
+            $('#fight').show(0);
+            $('#fight').html(`
+            <h2>FIGHT!!</h2>
+            <p id="attacking_player">${this.joueur}</p>
+            <button class="attack_button" id="attack_button_${this.joueur}">Attaquer</button>
+            <button class="def_button" id="def_button_${this.joueur}">Défendre</button>
+            `);
             $(`#attack_button_${this.joueur}`).on('click', () => {
-                this.postureCombatChoisit(game, "attaque");
+
+                this.postureCombatChoisit(game, "Normale");
             });
 
             $(`#def_button_${this.joueur}`).on('click', () => {
@@ -126,5 +143,25 @@ class Player {
 
         }
 
+    }
+    engagerCombat(grille, game) {
+        $('#fight').show(0);
+        $('#fight').html(`
+        <h2>AGGRESSION!</h2>
+        <p id="attacking_player">${this.joueur}</p>
+        <button class="attack_button" id="attack_button_${this.joueur}">Combattre</button>
+        <button class="def_button" id="def_button_${this.joueur}">Fuir</button>
+        `);
+        $(`#attack_button_${this.joueur}`).on('click', () => {
+            $('#message_combat').show().animate({ width: "-=10%" });
+            $('#sound1')[0].play();
+            grille.state = "fight";
+            this.choisirPostureCombat(game);
+        });
+        $(`#def_button_${this.joueur}`).on('click', () => {
+            $('#fight').hide(0);
+            grille.state = "préparation"
+            this.seDeplacer(grille, game);
+        });
     }
 }
