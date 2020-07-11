@@ -83,6 +83,7 @@ main{
     margin-top: 6px;
     margin-bottom: 10px;
     text-transform: capitalize;
+    font-weight: bold;
 }
 .attack_button {
     background-color: red;

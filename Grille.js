@@ -190,19 +190,19 @@ class Grille {
 
         let case1 = [origin[0] + i, origin[1] + j];
         let case1vide = false
-        if (this.grille[case1[0]] && this.grille[case1[0]][case1[1]] && this.grille[case1[0]][case1[1]].statut !== "obstacle") {
+        if (this.grille[case1[0]] && this.grille[case1[0]][case1[1]] && this.grille[case1[0]][case1[1]].statut !== "obstacle" && this.grille[case1[0]][case1[1]].type !== "joueur") {
             case1vide = true;
             listeCases.push(case1);
         }
         let case2 = [origin[0] + (2 * i), origin[1] + (2 * j)];
         let case2vide = false
-        if (case1vide === true && this.grille[case2[0]] && this.grille[case2[0]][case2[1]] && this.grille[case2[0]][case2[1]].statut !== "obstacle") {
+        if (case1vide === true && this.grille[case2[0]] && this.grille[case2[0]][case2[1]] && this.grille[case2[0]][case2[1]].statut !== "obstacle" && this.grille[case2[0]][case2[1]].type !== "joueur") {
             listeCases.push(case2);
             case2vide = true;
         }
 
         let case3 = [origin[0] + (3 * i), origin[1] + (3 * j)];
-        if (case2vide === true && this.grille[case3[0]] && this.grille[case3[0]][case3[1]] && this.grille[case3[0]][case3[1]].statut !== "obstacle") {
+        if (case2vide === true && this.grille[case3[0]] && this.grille[case3[0]][case3[1]] && this.grille[case3[0]][case3[1]].statut !== "obstacle" && this.grille[case3[0]][case3[1]].type !== "joueur") {
             listeCases.push(case3);
         }
         return listeCases;

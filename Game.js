@@ -3,7 +3,6 @@ class Game {
         this.joueurs = joueurs;
         this.grille = grille;
         this.round = 0;
-        this.endGame = false;
         this.activePlayer;
         this.passivePlayer;
     }
@@ -13,13 +12,21 @@ class Game {
         let j = Math.floor((this.round + 1) % 2);
         this.activePlayer = this.joueurs[i];
         this.passivePlayer = this.joueurs[j];
+        $(`#points_vie_${this.activePlayer.joueur}`).html(this.activePlayer.pv);
+        $(`#points_vie_${this.passivePlayer.joueur}`).html(this.passivePlayer.pv);
         if (this.activePlayer.state === "mort") {
-            alert(`${this.passivePlayer.joueur} remporte la partie`)
+            $('#fight').show();
+            $('#fight').html(`
+        <h2>GAME OVER</h2>
+        <p id="attacking_player">${this.passivePlayer.joueur} remporte la partie!!</p>
+        
+        `);
+
         } else {
 
             this.activePlayer.state = "active";
             if (this.grille.state === "possible fight") {
-                this.activePlayer.engagerCombat(this.grille, this)
+                this.activePlayer.fuirCombat(this.grille, this)
             } else if (this.grille.state === "fight") {
                 this.activePlayer.choisirPostureCombat(this);
             } else {

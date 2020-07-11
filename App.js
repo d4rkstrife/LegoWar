@@ -21,6 +21,8 @@ class App {
         game.init();
         console.log(grille.grille);
 
+
     }
+
 
 }
