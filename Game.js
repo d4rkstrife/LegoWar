@@ -19,6 +19,7 @@ class Game {
             $('#fight').html(`
         <h2>GAME OVER</h2>
         <p id="attacking_player">${this.passivePlayer.joueur} remporte la partie!!</p>
+        <button onClick="window.location.reload();">Rejouer</button>
         
         `);
 
