@@ -33,7 +33,7 @@ class Player {
                         grille.deplacerJoueur(that.coords, elementCoords);
                         that.coords = elementCoords;
                         that.position = grille.coordsToPosition(that.coords);
-                        $('.logs').append(`<p>${that.joueur} se déplace en ${that.coords}</p>`)
+                        $('#logs').append(`<p>${that.joueur} se déplace en ${that.coords}</p>`)
 
 
                     } else if (grille.grille[elementCoords[0]][elementCoords[1]].type == "arme") {
@@ -72,25 +72,25 @@ class Player {
         damageElt.text(`${this.armeEquipee.nom} : ${this.damage} dégats`);
         let armeElt = $(`#arme_${this.joueur}`);
         armeElt.attr("src", this.armeEquipee.image.src);
-        $('.logs').append(`<p>${this.joueur} ramasse l'arme  ${this.armeEquipee.nom}</p>`)
+        $('#logs').append(`<p>${this.joueur} ramasse l'arme  ${this.armeEquipee.nom}</p>`)
     }
     attaquer(game) {
         if (this.state === "active") {
             if (game.passivePlayer.positionCombat === "Normale") {
                 game.passivePlayer.pv = Math.floor(game.passivePlayer.pv - this.damage);
-                $('.logs').append(`<p>${this.joueur} attaque ${game.passivePlayer.joueur} pour ${this.damage} points de dégats.</p>`)
+                $('#logs').append(`<p>${this.joueur} attaque ${game.passivePlayer.joueur} pour ${this.damage} points de dégats.</p>`)
 
             } else if (game.passivePlayer.positionCombat === "défend") {
                 game.passivePlayer.pv = Math.floor(game.passivePlayer.pv - (this.damage / 2));
                 game.grille.state = "possible fight"
-                $('.logs').append(`<p>${this.joueur} attaque ${game.passivePlayer.joueur} pour ${this.damage / 2} points de dégats.</p>`)
+                $('#logs').append(`<p>${this.joueur} attaque ${game.passivePlayer.joueur} pour ${this.damage / 2} points de dégats.</p>`)
             } else {
                 console.log("error")
             }
             if (game.passivePlayer.pv <= 0) {
                 game.passivePlayer.pv = 0;
                 game.passivePlayer.state = "mort";
-                $('.logs').append(`<p>${game.passivePlayer.joueur} est mort.</p>`)
+                $('#logs').append(`<p>${game.passivePlayer.joueur} est mort.</p>`)
             }
 
 
@@ -100,7 +100,7 @@ class Player {
         $('#fight').hide(0);
         this.positionCombat = postureChoisit;
         if (postureChoisit === "Normale") {
-            $('.logs').append(`<p>${this.joueur} décide d'attaquer.</p>`);
+            $('#logs').append(`<p>${this.joueur} décide d'attaquer.</p>`);
             if ($(`#position_attaque_${this.joueur}`).hasClass("red")) {
 
             } else {
@@ -117,7 +117,7 @@ class Player {
             }
 
 
-            $('.logs').append(`<p>${this.joueur} décide de défendre.</p>`);
+            $('#logs').append(`<p>${this.joueur} décide de défendre.</p>`);
         }
         game.finirTour();
 
@@ -157,13 +157,11 @@ class Player {
             $('#sound1')[0].play();
             grille.state = "fight";
             game.finirTour();
-            /*     this.choisirPostureCombat(game);*/
         });
         $(`#def_button_${this.joueur}`).on('click', () => {
             $('#fight').hide(0);
             grille.state = "préparation";
             game.finirTour();
-            // this.seDeplacer(grille, game);
         });
     }
     fuirCombat(grille, game) {
@@ -185,10 +183,8 @@ class Player {
             $('#message_combat').hide();
             this.positionCombat = "Normale";
             game.passivePlayer.positionCombat = "Normale";
-            // jquery pour la position
-            if ($(`#position_attaque_${this.joueur}`).hasClass("red")) {
-
-            } else {
+            $('#logs').append(`<p>${this.joueur} décide de fuir.</p>`);
+            if (!$(`#position_attaque_${this.joueur}`).hasClass("red")) {
                 $(`#position_defense_${this.joueur}`).removeClass("green");
                 $(`#position_attaque_${this.joueur}`).addClass("red");
             }

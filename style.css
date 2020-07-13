@@ -10,7 +10,7 @@ header {
     display: flex;
     justify-content: center;
 }
-#show_logs {
+.button {
     position: absolute;
     top: 8%;
     left : 75%
@@ -150,7 +150,7 @@ td img {
     text-align: center;
     border: 2px solid black;
 }
-.logs {
+.overlay {
     display : none;
     position : absolute;
     overflow-y: scroll;
@@ -160,7 +160,7 @@ td img {
     text-align: center;
     margin: auto;
 }
-.logs p {
+.overlay p {
     margin:0;
 }
 .position_container {
@@ -177,7 +177,7 @@ td img {
     header {
         height: 70px; 
     }
-    #show_logs {
+    .button {
         top : 2%;
         left: 85%;
     }
@@ -281,8 +281,11 @@ td img {
            top: 30%;
            left: 25%;
        }
-       #message_combat {
+    #message_combat {
           width : 80%;
           position: absolute;
+      }
+      .overlay {
+          width : 80%;
       }
 }
