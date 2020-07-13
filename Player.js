@@ -164,6 +164,7 @@ class Player {
             game.finirTour();
         });
     }
+
     fuirCombat(grille, game) {
         $('#fight').show(0);
         $('#fight').html(`
