@@ -12,6 +12,8 @@ class Game {
         let j = Math.floor((this.round + 1) % 2);
         this.activePlayer = this.joueurs[i];
         this.passivePlayer = this.joueurs[j];
+        $(`#${this.activePlayer.position}`).fadeTo(0, 1);
+        $(`#${this.passivePlayer.position}`).fadeTo(0, 0.5);
         $(`#points_vie_${this.activePlayer.joueur}`).html(this.activePlayer.pv);
         $(`#points_vie_${this.passivePlayer.joueur}`).html(this.passivePlayer.pv);
         if (this.activePlayer.state === "mort") {

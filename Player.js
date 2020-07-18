@@ -111,6 +111,9 @@ class Player {
 
             $('#sound2')[0].play();
         } else {
+            if (game.passivePlayer.positionCombat === "défend") {
+                game.grille.state = "possible fight";
+            }
             if ($(`#position_attaque_${this.joueur}`).hasClass("red")) {
                 $(`#position_attaque_${this.joueur}`).removeClass("red");
                 $(`#position_defense_${this.joueur}`).addClass("green");
