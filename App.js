@@ -19,7 +19,6 @@ class App {
         grille.render("grille_container");
         let game = new Game(this.joueursCollection, grille);
         game.init();
-        console.log(grille.grille);
 
 
     }
