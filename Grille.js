@@ -4,10 +4,12 @@ class Grille {
         this.armes = armes;
         this.grille = new Array();
         this.nbrColonnes;
+        this.nbrLignes;
         this.state = "préparation";
     }
     genererGrille(nbrLignes, nbrColonnes, nbrObstacles) {
         this.nbrColonnes = nbrColonnes;
+        this.nbrLignes = nbrLignes;
         for (let i = 0; i < nbrLignes; i++) {
             let ligne = new Array();
             this.grille.push(ligne)
@@ -115,11 +117,11 @@ class Grille {
         return ((objet1.coords[0] === objet2.coords[0] && (objet1.coords[1] - objet2.coords[1] === 1 || objet1.coords[1] - objet2.coords[1] === -1)) || (objet1.coords[1] === objet2.coords[1] && (objet1.coords[0] - objet2.coords[0] === 1 || objet1.coords[0] - objet2.coords[0] === -1)));
     }
     coordsToPosition(coords) { //transforme les coordonnées en int pour coincider avec les id.
-        return coords[0] * 10 + coords[1]
+        return coords[0] * this.nbrLignes + coords[1]
     }
     positionToCoord(position) { //transforme la position en coordonnées
-        let b = position % 10;
-        let a = (position - b) / 10;
+        let b = position % this.nbrLignes;
+        let a = (position - b) / this.nbrColonnes;
         return [a, b];
     }
     caseDestination(coordDestination, statutDestination, typeDestination, contentDestination, content2Destination) {
